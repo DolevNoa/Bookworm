@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center"
     android:layout_margin="20dp"
+    android:gravity="center_horizontal"
     android:orientation="vertical"
     tools:context=".ProfileFragment">
 
@@ -18,9 +19,6 @@
         android:contentDescription="@string/profile_image"
         android:focusable="true"
         android:scaleType="centerCrop"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         tools:srcCompat="@tools:sample/avatars" />
 
     <EditText
@@ -28,48 +26,33 @@
         android:layout_width="200dp"
         android:layout_height="48dp"
         android:layout_marginTop="48dp"
-        android:hint="User Name"
+        android:hint="@string/full_name"
         android:inputType="text"
-        android:padding="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profileImage"/>
+        android:padding="10dp" />
 
     <EditText
         android:id="@+id/EmailEditText"
         android:layout_width="200dp"
         android:layout_height="48dp"
         android:layout_marginTop="40dp"
-        android:hint="Email"
+        android:hint="@string/email"
         android:inputType="textEmailAddress"
-        android:padding="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/FullNameEditText"/>
+        android:padding="10dp" />
 
     <EditText
         android:id="@+id/PhoneEditText"
         android:layout_width="200dp"
         android:layout_height="48dp"
         android:layout_marginTop="40dp"
-        android:hint="Phone Number"
-        android:inputType="number"
-        android:padding="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/EmailEditText"/>
+        android:hint="@string/phone_number"
+        android:inputType="phone"
+        android:padding="10dp" />
 
     <Button
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
-        android:text="Save"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/PhoneEditText"/>
+        android:text="@string/button" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

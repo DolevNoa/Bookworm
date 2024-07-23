@@ -1,9 +1,9 @@
 <resources>
     <string name="app_name">BookWorm</string>
-    <string name="first_name">First Name</string>
     <string name="profile_image">Profile Image</string>
-    <string name="last_name">Last Name</string>
     <string name="email">Email</string>
     <string name="button">Button</string>
     <string name="save_profile" />
+    <string name="phone_number">Phone Number</string>
+    <string name="full_name">Full Name</string>
 </resources>
