@@ -21,29 +21,53 @@
         android:scaleType="centerCrop"
         tools:srcCompat="@tools:sample/avatars" />
 
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="200dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="42dp"
+        android:padding="5dp"
+        android:text="@string/full_name" />
+
     <EditText
         android:id="@+id/FullNameEditText"
         android:layout_width="200dp"
         android:layout_height="48dp"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="0dp"
         android:hint="@string/full_name"
         android:inputType="text"
         android:padding="10dp" />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="200dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="48dp"
+        android:padding="5dp"
+        android:text="@string/email" />
 
     <EditText
         android:id="@+id/EmailEditText"
         android:layout_width="200dp"
         android:layout_height="48dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="0dp"
         android:hint="@string/email"
         android:inputType="textEmailAddress"
         android:padding="10dp" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="200dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="48dp"
+        android:padding="5dp"
+        android:text="@string/phone_number" />
 
     <EditText
         android:id="@+id/PhoneEditText"
         android:layout_width="200dp"
         android:layout_height="48dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="0dp"
         android:hint="@string/phone_number"
         android:inputType="phone"
         android:padding="10dp" />
@@ -54,5 +78,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
         android:text="@string/button" />
+
 
 </LinearLayout>
