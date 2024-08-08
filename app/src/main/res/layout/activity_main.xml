@@ -9,8 +9,9 @@
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragmentContainerView"
-        android:name="com.example.bookworm.ProfileFragment"
+        android:name="com.example.bookworm.ui.userProfile.ProfileFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        tools:layout="@layout/fragment_profile" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
