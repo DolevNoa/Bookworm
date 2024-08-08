@@ -1,0 +1,77 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <Button
+            android:id="@+id/buttonChoosePhoto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/choose_photo_btn_text" />
+
+        <ImageView
+            android:id="@+id/imageViewBook"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginTop="15dp"
+            android:scaleType="centerCrop"
+            android:contentDescription="@string/book_image_content_desc" />
+        <TextView
+            android:id="@+id/bookNameLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/book_name_label"/>
+
+        <EditText
+            android:id="@+id/bookNameInput"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:hint="@string/book_name_edit_text_hint"
+            android:padding="8dp"
+            android:inputType="text"
+            android:autofillHints="bookName"
+            android:layout_marginBottom="8dp"/>
+        <TextView
+            android:id="@+id/descriptionLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/description_label"/>
+        <EditText
+            android:id="@+id/descriptionInput"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:hint="@string/description_edit_text_hint"
+            android:padding="8dp"
+            android:layout_marginBottom="8dp"
+            android:inputType="textMultiLine"
+            android:autofillHints="bookDescription"/>
+
+        <RatingBar
+            android:id="@+id/ratingBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:numStars="5"
+            android:stepSize="1.0"
+            android:layout_marginBottom="16dp"/>
+
+        <Button
+            android:id="@+id/buttonSubmitBook"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/submit_book_btn_text"/>
+
+        <ProgressBar
+            android:id="@+id/uploadProgress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:layout_gravity="center"
+            style="?android:attr/progressBarStyle"/>
+
+    </LinearLayout>
+</ScrollView>

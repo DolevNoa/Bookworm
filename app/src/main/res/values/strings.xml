@@ -25,4 +25,16 @@
     <string name="login">Login</string>
     <string name="don_t_have_an_account_register">Don\'t have an account? Register</string>
     <string name="update">Update</string>
+    <!-- Strings related to upload book -->
+    <string name="book_name_label">Book Name:</string>
+    <string name="book_name_edit_text_hint">Enter the book name</string>
+    <string name="description_label">Description:</string>
+    <string name="description_edit_text_hint">Enter a description</string>
+    <string name="rating_label">Rating</string>
+    <string name="submit_book_btn_text">Submit</string>
+    <string name="choose_photo_btn_text">Choose Photo</string>
+    <string name="book_image_content_desc">Book Image</string>
+
+    <string name="feed_title">Feed</string>
+
 </resources>
