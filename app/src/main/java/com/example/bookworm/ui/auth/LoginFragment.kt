@@ -8,6 +8,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.example.bookworm.R
 import com.google.firebase.auth.FirebaseAuth
 
@@ -22,6 +23,8 @@ class LoginFragment : Fragment() {
     private lateinit var emailEditText: EditText
     private lateinit var passwordEditText: EditText
     private lateinit var loginButton: Button
+    private lateinit var navigateToRegisterButton: Button
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,6 +43,7 @@ class LoginFragment : Fragment() {
         emailEditText = view.findViewById(R.id.emailEditText)
         passwordEditText = view.findViewById(R.id.passwordEditText)
         loginButton = view.findViewById(R.id.loginButton)
+        navigateToRegisterButton = view.findViewById(R.id.navigateToRegisterButton)
 
         loginButton.setOnClickListener {
             val email = emailEditText.text.toString()
@@ -51,6 +55,10 @@ class LoginFragment : Fragment() {
                 Toast.makeText(context, "Please enter email and password", Toast.LENGTH_SHORT)
                     .show()
             }
+        }
+
+        navigateToRegisterButton.setOnClickListener {
+            findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
         }
 
         return view

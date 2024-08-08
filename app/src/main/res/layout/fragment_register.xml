@@ -83,15 +83,15 @@
         android:text="@string/register"
         android:padding="10dp" />
 
-    <TextView
-        android:id="@+id/loginTextView"
+    <Button
+        android:id="@+id/navigateToLoginButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/already_have_an_account_login"
-        android:textColor="@android:color/holo_blue_dark"
-        android:layout_marginTop="18dp"
+        android:layout_marginTop="38dp"
+        android:background="@android:color/transparent"
         android:gravity="center"
-        android:paddingTop="20dp" />
+        android:text="@string/already_have_an_account_login"
+        android:textColor="@android:color/holo_blue_dark" />
 
 
 </LinearLayout>

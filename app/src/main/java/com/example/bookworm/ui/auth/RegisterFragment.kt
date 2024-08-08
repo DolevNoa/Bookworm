@@ -8,6 +8,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.example.bookworm.MainActivity
 import com.example.bookworm.R
 import com.example.bookworm.databinding.FragmentRegisterBinding
@@ -25,6 +26,7 @@ class RegisterFragment : Fragment() {
     private lateinit var passwordEditText: EditText
     private lateinit var confirmPasswordEditText: EditText
     private lateinit var registerButton: Button
+    private lateinit var navigateToLoginButton: Button
 
     private lateinit var binding: FragmentRegisterBinding
     private lateinit var viewModel: AuthViewModel
@@ -46,10 +48,12 @@ class RegisterFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_register, container, false)
+
         emailEditText = view.findViewById(R.id.emailEditText)
         passwordEditText = view.findViewById(R.id.passwordEditText)
         confirmPasswordEditText = view.findViewById(R.id.confirmPasswordEditText)
         registerButton = view.findViewById(R.id.registerButton)
+        navigateToLoginButton = view.findViewById(R.id.navigateToLoginButton)
 
         registerButton.setOnClickListener {
             val email = emailEditText.text.toString()
@@ -65,6 +69,10 @@ class RegisterFragment : Fragment() {
             } else {
                 Toast.makeText(context, "Please fill in all fields", Toast.LENGTH_SHORT).show()
             }
+        }
+
+        navigateToLoginButton.setOnClickListener {
+            findNavController().navigate(R.id.action_registerFragment_to_loginFragment)
         }
 
         return view
