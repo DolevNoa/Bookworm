@@ -33,7 +33,6 @@ class OutFragment : Fragment() {
 
         logoutButton.setOnClickListener {
             auth.signOut()
-            (activity as? AuthActivity)?.navigateToLogin()
         }
 
         return view
