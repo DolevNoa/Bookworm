@@ -8,15 +8,17 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.example.bookworm.MainActivity
 import com.example.bookworm.R
+import com.example.bookworm.databinding.FragmentRegisterBinding
 import com.google.firebase.auth.FirebaseAuth
 
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
 class RegisterFragment : Fragment() {
-    private var param1: String? = null
-    private var param2: String? = null
+    companion object {
+        fun newInstance(): RegisterFragment {
+            return RegisterFragment()
+        }
+    }
 
     private lateinit var auth: FirebaseAuth
     private lateinit var emailEditText: EditText
@@ -24,11 +26,15 @@ class RegisterFragment : Fragment() {
     private lateinit var confirmPasswordEditText: EditText
     private lateinit var registerButton: Button
 
+    private lateinit var binding: FragmentRegisterBinding
+    private lateinit var viewModel: AuthViewModel
+
+    private val mainActivity: MainActivity
+        get() = activity as MainActivity
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
         }
 
         // Initialize Firebase Auth
@@ -79,11 +85,4 @@ class RegisterFragment : Fragment() {
                 }
             }
     }
-
-    companion object {
-        fun newInstance(): RegisterFragment {
-            return RegisterFragment()
-        }
-    }
-
 }

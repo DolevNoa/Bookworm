@@ -11,12 +11,12 @@ import androidx.fragment.app.Fragment
 import com.example.bookworm.R
 import com.google.firebase.auth.FirebaseAuth
 
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
 class LoginFragment : Fragment() {
-    private var param1: String? = null
-    private var param2: String? = null
+    companion object {
+        fun newInstance(): LoginFragment {
+            return LoginFragment()
+        }
+    }
 
     private lateinit var auth: FirebaseAuth
     private lateinit var emailEditText: EditText
@@ -26,8 +26,6 @@ class LoginFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
         }
 
         // Initialize Firebase Auth
@@ -50,7 +48,8 @@ class LoginFragment : Fragment() {
             if (email.isNotEmpty() && password.isNotEmpty()) {
                 signIn(email, password)
             } else {
-                Toast.makeText(context, "Please enter email and password", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Please enter email and password", Toast.LENGTH_SHORT)
+                    .show()
             }
         }
 
@@ -68,11 +67,4 @@ class LoginFragment : Fragment() {
                 }
             }
     }
-
-    companion object {
-        fun newInstance(): LoginFragment {
-            return LoginFragment()
-        }
-    }
-
 }
