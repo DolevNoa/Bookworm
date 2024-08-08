@@ -25,6 +25,7 @@
     <string name="login">Login</string>
     <string name="don_t_have_an_account_register">Don\'t have an account? Register</string>
     <string name="update">Update</string>
+    <string name="userEmail">john.doe@gmail.com</string>
     <!-- Strings related to upload book -->
     <string name="book_name_label">Book Name:</string>
     <string name="book_name_edit_text_hint">Enter the book name</string>
