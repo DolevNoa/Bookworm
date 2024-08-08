@@ -1,4 +1,4 @@
-package com.example.bookworm
+package com.example.bookworm.ui.userProfile
 
 import android.content.Context
 import android.os.Bundle
@@ -10,9 +10,8 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.example.bookworm.R
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
