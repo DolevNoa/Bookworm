@@ -41,6 +41,7 @@ android {
 
 dependencies {
     val appcompat_version = "1.7.0"
+    val nav_version = "2.7.7"
 
     implementation("androidx.recyclerview:recyclerview:1.3.2")
     // For control over item selection of both touch and mouse driven selection
@@ -61,6 +62,8 @@ dependencies {
     implementation(libs.androidx.fragment.ktx)
     implementation(libs.firebase.auth)
     implementation(libs.androidx.annotation)
+    implementation(libs.androidx.navigation.fragment.ktx)
+    implementation(libs.androidx.navigation.ui.ktx)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
