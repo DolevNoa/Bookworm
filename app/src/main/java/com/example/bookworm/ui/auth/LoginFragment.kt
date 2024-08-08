@@ -1,4 +1,4 @@
-package com.example.bookworm
+package com.example.bookworm.ui.auth
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,6 +8,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.example.bookworm.R
 import com.google.firebase.auth.FirebaseAuth
 
 private const val ARG_PARAM1 = "param1"
@@ -61,7 +62,6 @@ class LoginFragment : Fragment() {
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     // Sign in success, navigate to the next fragment or activity
-                    (activity as? AuthActivity)?.navigateToOut()
                 } else {
                     // If sign in fails, display a message to the user
                     Toast.makeText(context, "Authentication failed.", Toast.LENGTH_SHORT).show()

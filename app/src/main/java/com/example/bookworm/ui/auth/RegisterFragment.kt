@@ -1,4 +1,4 @@
-package com.example.bookworm
+package com.example.bookworm.ui.auth
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,6 +8,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.example.bookworm.R
 import com.google.firebase.auth.FirebaseAuth
 
 private const val ARG_PARAM1 = "param1"
@@ -68,10 +69,13 @@ class RegisterFragment : Fragment() {
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     // Account creation success, navigate to the next fragment or activity
-                    (activity as? AuthActivity)?.navigateToOut()
                 } else {
                     // If account creation fails, display a message to the user
-                    Toast.makeText(context, "Registration failed: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        context,
+                        "Registration failed: ${task.exception?.message}",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
     }
