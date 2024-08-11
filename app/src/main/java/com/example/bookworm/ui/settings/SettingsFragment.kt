@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.ProgressBar
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.example.bookworm.R
 import com.example.bookworm.databinding.FragmentSettingsBinding
 import com.example.bookworm.ui.auth.AuthViewModel
@@ -38,16 +39,28 @@ class SettingsFragment : Fragment() {
         binding.userName.text = userName
         binding.email.text = userEmail
 
+        // Navigate to profile fragment
         binding.editUserButton.setOnClickListener {
             findNavController().navigate(R.id.action_settingsFragment_to_profileFragment)
         }
 
-
-        //val firestoreDb: FirebaseFirestore = FirebaseFirestore.getInstance()
-        val firestoreAuth: FirebaseAuth = FirebaseAuth.getInstance()
-        //val userRepository = UserRepository(firestoreDb, firestoreAuth, UserDatabase.getDatabase(requireContext()).userDao())
+        // Handle log out button click
+        binding.button1.setOnClickListener {
+            signOutAndNavigateToLogin()
+        }
 
         return binding.root
+    }
+
+    private fun signOutAndNavigateToLogin() {
+        // Sign out the user
+        FirebaseAuth.getInstance().signOut()
+
+        // Navigate to the login fragment
+        findNavController().navigate(R.id.action_settingsFragment_to_loginFragment)
+
+        // Show a toast message for feedback
+        Toast.makeText(requireContext(), "Logged out successfully", Toast.LENGTH_SHORT).show()
     }
 
     companion object {
