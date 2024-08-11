@@ -41,5 +41,6 @@
     <string name="edit_user">Edit User</string>
     <string name="log_out">Log Out</string>
     <string name="userName">John Doe</string>
+    <string name="SaveChanges">Save Changes</string>
 
 </resources>
