@@ -2,28 +2,24 @@ package com.example.bookworm.ui.userProfile
 
 import android.app.Activity
 import android.content.Intent
-import android.graphics.Bitmap
+import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ImageView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.bumptech.glide.Glide
 import com.example.bookworm.R
 import com.example.bookworm.databinding.FragmentProfileBinding
 import com.example.bookworm.ui.auth.AuthViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.UserProfileChangeRequest
-import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
-import java.io.ByteArrayOutputStream
-import java.util.UUID
+import com.google.firebase.storage.StorageReference
 
 class ProfileFragment : Fragment() {
 
@@ -32,6 +28,9 @@ class ProfileFragment : Fragment() {
 
     private lateinit var viewModel: AuthViewModel
     private lateinit var auth: FirebaseAuth
+    private lateinit var storage: FirebaseStorage
+    private lateinit var storageRef: StorageReference
+
     private val PICK_IMAGE_REQUEST = 1
     private var imageUri: Uri? = null
 
@@ -48,13 +47,16 @@ class ProfileFragment : Fragment() {
 
         viewModel = ViewModelProvider(requireActivity())[AuthViewModel::class.java]
         auth = FirebaseAuth.getInstance()
+        storage = FirebaseStorage.getInstance()
+        storageRef = storage.reference
 
         // Populate fields with current user data
         populateUserData()
 
         // Set up click listeners
         binding.profileImage.setOnClickListener {
-            openImagePicker()
+            // Launch the image picker
+            openImageChooser()
         }
 
         binding.updateButton.setOnClickListener {
@@ -79,39 +81,19 @@ class ProfileFragment : Fragment() {
         currentUser?.let { user ->
             binding.FullNameEditText.setText(user.displayName)
             binding.EmailEditText.setText(user.email)
-            // Load profile image using Glide or similar library
+
+            // Load profile image if available
+            val photoUrl = user.photoUrl
+            photoUrl?.let {
+                Glide.with(this).load(photoUrl).into(binding.profileImage)
+            } ?: run {
+                // Set default avatar if no photo URL is available
+                binding.profileImage.setImageResource(R.drawable.default_avatar)
+            }
         }
     }
 
-    private fun openImagePicker() {
-        val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-        startActivityForResult(intent, PICK_IMAGE_REQUEST)
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data != null) {
-            imageUri = data.data
-            binding.profileImage.setImageURI(imageUri)
-        }
-    }
-
-    private fun uploadImageToFirebaseStorage() {
-        val storageRef = FirebaseStorage.getInstance().reference.child("profile_images/${UUID.randomUUID()}")
-        imageUri?.let { uri ->
-            storageRef.putFile(uri)
-                .addOnSuccessListener { taskSnapshot ->
-                    taskSnapshot.storage.downloadUrl.addOnSuccessListener { url ->
-                        updateUserProfile(url.toString())
-                    }
-                }
-                .addOnFailureListener {
-                    Toast.makeText(context, "Failed to upload image", Toast.LENGTH_SHORT).show()
-                }
-        }
-    }
-
-    private fun updateUserProfile(profileImageUrl: String? = null) {
+    private fun updateUserProfile() {
         val newDisplayName = binding.FullNameEditText.text.toString()
         val newEmail = binding.EmailEditText.text.toString()
 
@@ -119,7 +101,6 @@ class ProfileFragment : Fragment() {
         user?.let { firebaseUser ->
             val profileUpdates = UserProfileChangeRequest.Builder()
                 .setDisplayName(newDisplayName)
-                .apply { profileImageUrl?.let { setPhotoUri(Uri.parse(it)) } }
                 .build()
 
             firebaseUser.updateProfile(profileUpdates)
@@ -138,10 +119,52 @@ class ProfileFragment : Fragment() {
                         } else {
                             Toast.makeText(context, "Profile updated successfully", Toast.LENGTH_SHORT).show()
                         }
+
                     } else {
                         Toast.makeText(context, "Failed to update profile: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
                     }
                 }
+        }
+    }
+
+    private fun uploadImageToFirebaseStorage() {
+        val fileRef = storageRef.child("profile_images/${auth.currentUser?.uid}.jpg")
+        fileRef.putFile(imageUri!!)
+            .addOnSuccessListener {
+                // After upload, update the profile with the new image URL
+                fileRef.downloadUrl.addOnSuccessListener { uri ->
+                    val profileUpdates = UserProfileChangeRequest.Builder()
+                        .setPhotoUri(uri)
+                        .build()
+
+                    auth.currentUser?.updateProfile(profileUpdates)
+                        ?.addOnCompleteListener { task ->
+                            if (task.isSuccessful) {
+                                Toast.makeText(context, "Profile image updated successfully", Toast.LENGTH_SHORT).show()
+                                // Update user profile
+                                updateUserProfile()
+                            } else {
+                                Toast.makeText(context, "Failed to update profile image", Toast.LENGTH_SHORT).show()
+                            }
+                        }
+                }
+            }
+            .addOnFailureListener {
+                Toast.makeText(context, "Failed to upload image", Toast.LENGTH_SHORT).show()
+            }
+    }
+
+    private fun openImageChooser() {
+        val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+        startActivityForResult(intent, PICK_IMAGE_REQUEST)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data != null && data.data != null) {
+            imageUri = data.data
+            binding.profileImage.setImageURI(imageUri)
         }
     }
 
