@@ -1,64 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_gravity="center"
-    android:layout_margin="20dp"
-    android:gravity="center_horizontal"
-    android:orientation="vertical"
-    tools:context=".ui.settings.SettingsFragment">
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:layout_gravity="center"
+android:layout_margin="20dp"
+android:gravity="center_horizontal"
+android:orientation="vertical"
+tools:context=".ui.settings.SettingsFragment">
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="160dp"
-        android:layout_height="160dp"
-        android:layout_marginTop="32dp"
-        app:cardCornerRadius="80dp"
-        app:cardElevation="4dp">
+<androidx.cardview.widget.CardView
+    android:layout_width="160dp"
+    android:layout_height="160dp"
+    android:layout_marginTop="32dp"
+    app:cardCornerRadius="80dp"
+    app:cardElevation="4dp">
 
-        <ImageView
-            android:id="@+id/profileImage"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:clickable="true"
-            android:contentDescription="@string/profile_image"
-            android:scaleType="centerCrop"
-            android:src="@drawable/default_avatar"
-            />
+    <ImageView
+        android:id="@+id/profileImage"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:clickable="true"
+        android:contentDescription="@string/profile_image"
+        android:scaleType="centerCrop"
+        android:src="@drawable/default_avatar"
+        />
 
-    </androidx.cardview.widget.CardView>
+</androidx.cardview.widget.CardView>
 
-        <TextView
-            android:id="@+id/userName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/full_name" />
+<TextView
+    android:id="@+id/fullNamelabel"
+    android:layout_width="200dp"
+    android:layout_height="40dp"
+    android:layout_marginTop="42dp"
+    android:padding="5dp"
+    android:text="@string/full_name" />
 
-        <TextView
-            android:id="@+id/emailLabel"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/email" />
+<TextView
+    android:id="@+id/userName"
+    android:layout_width="200dp"
+    android:layout_height="48dp"
+    android:layout_marginTop="0dp"
+    android:text="@string/userName"
+    android:padding="10dp" />
 
-        <TextView
-            android:id="@+id/email"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/userEmail" />
+<TextView
+    android:id="@+id/emailLabel"
+    android:layout_width="200dp"
+    android:layout_height="40dp"
+    android:layout_marginTop="48dp"
+    android:padding="5dp"
+    android:text="@string/email" />
 
-        <Button
-            android:id="@+id/editUserButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/edit_user" />
 
-        <Button
-            android:id="@+id/button1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/red"
-            android:text="@string/log_out" />
+<TextView
+    android:id="@+id/email"
+    android:layout_width="200dp"
+    android:layout_height="40dp"
+    android:layout_marginTop="0dp"
+    android:padding="5dp"
+    android:text="@string/userEmail" />
+
+<Button
+    android:id="@+id/editUserButton"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="20dp"
+    android:text="@string/edit_user" />
+
+<Button
+    android:id="@+id/button1"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="20dp"
+    android:backgroundTint="@color/red"
+    android:text="@string/log_out" />
 
 </LinearLayout>
