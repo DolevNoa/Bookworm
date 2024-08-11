@@ -13,6 +13,7 @@ import com.example.bookworm.MainActivity
 import com.example.bookworm.R
 import com.example.bookworm.databinding.FragmentRegisterBinding
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 
 class RegisterFragment : Fragment() {
     companion object {
@@ -22,9 +23,12 @@ class RegisterFragment : Fragment() {
     }
 
     private lateinit var auth: FirebaseAuth
+    private lateinit var firestore: FirebaseFirestore
+
     private lateinit var emailEditText: EditText
     private lateinit var passwordEditText: EditText
     private lateinit var confirmPasswordEditText: EditText
+    private lateinit var fullNameEditText: EditText
     private lateinit var registerButton: Button
     private lateinit var navigateToLoginButton: Button
 
@@ -36,33 +40,35 @@ class RegisterFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-        }
 
-        // Initialize Firebase Auth
+        // Initialize Firebase Auth and Firestore
         auth = FirebaseAuth.getInstance()
+        firestore = FirebaseFirestore.getInstance()
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_register, container, false)
+        binding = FragmentRegisterBinding.inflate(inflater, container, false)
+        val view = binding.root
 
-        emailEditText = view.findViewById(R.id.emailEditText)
-        passwordEditText = view.findViewById(R.id.passwordEditText)
-        confirmPasswordEditText = view.findViewById(R.id.confirmPasswordEditText)
-        registerButton = view.findViewById(R.id.registerButton)
-        navigateToLoginButton = view.findViewById(R.id.navigateToLoginButton)
+        emailEditText = binding.emailEditText
+        passwordEditText = binding.passwordEditText
+        confirmPasswordEditText = binding.confirmPasswordEditText
+        fullNameEditText = binding.fullNameEditText
+        registerButton = binding.registerButton
+        navigateToLoginButton = binding.navigateToLoginButton
 
         registerButton.setOnClickListener {
             val email = emailEditText.text.toString()
             val password = passwordEditText.text.toString()
             val confirmPassword = confirmPasswordEditText.text.toString()
+            val fullName = fullNameEditText.text.toString()
 
-            if (email.isNotEmpty() && password.isNotEmpty() && confirmPassword.isNotEmpty()) {
+            if (email.isNotEmpty() && password.isNotEmpty() && confirmPassword.isNotEmpty() && fullName.isNotEmpty()) {
                 if (password == confirmPassword) {
-                    createAccount(email, password)
+                    createAccount(email, password, fullName)
                 } else {
                     Toast.makeText(context, "Passwords do not match", Toast.LENGTH_SHORT).show()
                 }
@@ -78,19 +84,43 @@ class RegisterFragment : Fragment() {
         return view
     }
 
-    private fun createAccount(email: String, password: String) {
+    private fun createAccount(email: String, password: String, fullName: String) {
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    // Account creation success, navigate to the next fragment or activity
+                    // Registration success
+                    val userId = auth.currentUser?.uid
+                    if (userId != null) {
+                        saveUserProfile(userId, fullName)
+                    } else {
+                        // Handle error
+                        Toast.makeText(context, "User ID is null", Toast.LENGTH_SHORT).show()
+                    }
                 } else {
-                    // If account creation fails, display a message to the user
+                    // If registration fails, display a message to the user
                     Toast.makeText(
                         context,
                         "Registration failed: ${task.exception?.message}",
                         Toast.LENGTH_SHORT
                     ).show()
                 }
+            }
+    }
+
+    private fun saveUserProfile(userId: String, fullName: String) {
+        val userProfile = hashMapOf(
+            "fullName" to fullName
+        )
+        firestore.collection("users").document(userId)
+            .set(userProfile)
+            .addOnSuccessListener {
+                // Profile saved successfully
+                Toast.makeText(context, "Registration successful", Toast.LENGTH_SHORT).show()
+                findNavController().navigate(R.id.action_registerFragment_to_loginFragment)
+            }
+            .addOnFailureListener { e ->
+                // Handle error
+                Toast.makeText(context, "Failed to save profile: ${e.message}", Toast.LENGTH_SHORT).show()
             }
     }
 }
