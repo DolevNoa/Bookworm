@@ -37,5 +37,6 @@
     <string name="book_image_content_desc">Book Image</string>
 
     <string name="feed_title">Feed</string>
+    <string name="cancel">Cancel</string>
 
 </resources>
