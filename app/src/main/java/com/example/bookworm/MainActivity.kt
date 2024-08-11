@@ -7,7 +7,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.navigation.NavController
-import androidx.navigation.Navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -27,9 +26,6 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
-        val auth = FirebaseAuth.getInstance()
-        val currentUser = auth.currentUser
-
         // Initialize NavController and BottomNavigationView
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
@@ -37,11 +33,6 @@ class MainActivity : AppCompatActivity() {
 
         bottomNavigationView = findViewById(R.id.bottom_navigation)
         NavigationUI.setupWithNavController(bottomNavigationView, navController)
-
-        // Redirect to login if not authenticated
-        if (currentUser == null) {
-            navController.navigate(R.id.loginFragment)
-        }
 
         // Handle navigation destination changes to show or hide BottomNavigationView
         navController.addOnDestinationChangedListener { _, destination, _ ->
@@ -55,9 +46,18 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        // Set default fragment
+        // Check if user is logged in
+        val auth = FirebaseAuth.getInstance()
+        val currentUser = auth.currentUser
+
         if (savedInstanceState == null) {
-            bottomNavigationView.selectedItemId = R.id.settingsFragment
+            if (currentUser != null) {
+                // User is logged in; navigate to the SettingsFragment
+                navController.navigate(R.id.settingsFragment)
+            } else {
+                // User is not logged in; navigate to the LoginFragment
+                navController.navigate(R.id.loginFragment)
+            }
         }
     }
 }
