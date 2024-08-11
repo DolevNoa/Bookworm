@@ -38,5 +38,7 @@
 
     <string name="feed_title">Feed</string>
     <string name="cancel">Cancel</string>
+    <string name="edit_user">Edit User</string>
+    <string name="log_out">Log Out</string>
 
 </resources>
