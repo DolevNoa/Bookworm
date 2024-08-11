@@ -70,7 +70,7 @@ class LoginFragment : Fragment() {
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     // Sign in success, navigate to the next fragment or activity
-                    findNavController().navigate(R.id.action_loginFragment_to_profileFragment)
+                    findNavController().navigate(R.id.action_loginFragment_to_settingsFragment)
                 } else {
                     // If sign in fails, display a message to the user
                     Toast.makeText(context, "Authentication failed.", Toast.LENGTH_SHORT).show()
