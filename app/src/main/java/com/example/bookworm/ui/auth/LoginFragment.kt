@@ -9,6 +9,7 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.example.bookworm.MainActivity
 import com.example.bookworm.R
 import com.google.firebase.auth.FirebaseAuth
 
@@ -69,6 +70,7 @@ class LoginFragment : Fragment() {
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     // Sign in success, navigate to the next fragment or activity
+                    findNavController().navigate(R.id.action_loginFragment_to_profileFragment)
                 } else {
                     // If sign in fails, display a message to the user
                     Toast.makeText(context, "Authentication failed.", Toast.LENGTH_SHORT).show()
