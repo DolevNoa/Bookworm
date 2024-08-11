@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.example.bookworm.R
 import com.example.bookworm.databinding.FragmentProfileBinding
@@ -73,6 +74,7 @@ class ProfileFragment : Fragment() {
             // Handle cancel button action
             Toast.makeText(context, "Changes canceled", Toast.LENGTH_SHORT).show()
             // Navigate back or close fragment
+            findNavController().navigate(R.id.action_profileFragment_to_settingsFragment)
         }
     }
 

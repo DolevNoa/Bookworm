@@ -19,6 +19,7 @@ import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import com.example.bookworm.MainActivity
 import com.example.bookworm.databinding.FragmentRegisterBinding
+import com.example.bookworm.ui.userProfile.ProfileFragment
 
 class SettingsFragment : Fragment() {
     private lateinit var binding: FragmentSettingsBinding
@@ -34,8 +35,12 @@ class SettingsFragment : Fragment() {
         // Populate user data
         val userName = viewModel.getUserName()
         val userEmail = viewModel.getUserEmail()
-        binding.textView.text = userName
-        binding.textView2.text = userEmail
+        binding.userName.text = userName
+        binding.email.text = userEmail
+
+        binding.editUserButton.setOnClickListener {
+            findNavController().navigate(R.id.action_settingsFragment_to_profileFragment)
+        }
 
 
         //val firestoreDb: FirebaseFirestore = FirebaseFirestore.getInstance()
@@ -43,5 +48,9 @@ class SettingsFragment : Fragment() {
         //val userRepository = UserRepository(firestoreDb, firestoreAuth, UserDatabase.getDatabase(requireContext()).userDao())
 
         return binding.root
+    }
+
+    companion object {
+        fun newInstance() = SettingsFragment()
     }
 }
