@@ -55,23 +55,6 @@
         android:inputType="textEmailAddress"
         android:padding="10dp" />
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="200dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="48dp"
-        android:padding="5dp"
-        android:text="@string/phone_number" />
-
-    <EditText
-        android:id="@+id/PhoneEditText"
-        android:layout_width="200dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="0dp"
-        android:hint="@string/phone_number"
-        android:inputType="phone"
-        android:padding="10dp" />
-
     <Button
         android:id="@+id/button"
         android:layout_width="wrap_content"
