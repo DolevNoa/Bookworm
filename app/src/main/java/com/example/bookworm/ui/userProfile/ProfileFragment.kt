@@ -82,7 +82,6 @@ class ProfileFragment : Fragment() {
         val currentUser = auth.currentUser
         currentUser?.let { user ->
             binding.FullNameEditText.setText(user.displayName)
-            binding.EmailEditText.setText(user.email)
 
             // Load profile image if available
             val photoUrl = user.photoUrl
@@ -97,7 +96,6 @@ class ProfileFragment : Fragment() {
 
     private fun updateUserProfile() {
         val newDisplayName = binding.FullNameEditText.text.toString()
-        val newEmail = binding.EmailEditText.text.toString()
 
         val user = auth.currentUser
         user?.let { firebaseUser ->
@@ -108,21 +106,8 @@ class ProfileFragment : Fragment() {
             firebaseUser.updateProfile(profileUpdates)
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
-                        // Update email if changed
-                        if (newEmail != firebaseUser.email) {
-                            firebaseUser.updateEmail(newEmail)
-                                .addOnCompleteListener { emailTask ->
-                                    if (emailTask.isSuccessful) {
-                                        Toast.makeText(context, "Profile updated successfully", Toast.LENGTH_SHORT).show()
-                                        navigateBackToSettings()
-                                    } else {
-                                        Toast.makeText(context, "Failed to update email: ${emailTask.exception?.message}", Toast.LENGTH_SHORT).show()
-                                    }
-                                }
-                        } else {
-                            Toast.makeText(context, "Profile updated successfully", Toast.LENGTH_SHORT).show()
-                            navigateBackToSettings()
-                        }
+                        Toast.makeText(context, "Profile updated successfully", Toast.LENGTH_SHORT).show()
+                        navigateBackToSettings()
                     } else {
                         Toast.makeText(context, "Failed to update profile: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
                     }
