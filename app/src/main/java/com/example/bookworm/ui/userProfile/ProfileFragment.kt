@@ -66,6 +66,8 @@ class ProfileFragment : Fragment() {
             } else {
                 updateUserProfile()
             }
+            // Navigate back or close fragment
+            findNavController().navigate(R.id.action_profileFragment_to_settingsFragment)
         }
 
         binding.cancelButton.setOnClickListener {
