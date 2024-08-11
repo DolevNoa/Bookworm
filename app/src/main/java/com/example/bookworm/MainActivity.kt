@@ -1,23 +1,21 @@
 package com.example.bookworm
 
 import android.os.Bundle
+import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.Navigation.findNavController
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
-import com.example.bookworm.ui.settings.SettingsFragment
-import com.example.bookworm.ui.userProfile.ProfileFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 
 class MainActivity : AppCompatActivity() {
     private lateinit var navController: NavController
+    private lateinit var bottomNavigationView: BottomNavigationView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,35 +30,32 @@ class MainActivity : AppCompatActivity() {
         val auth = FirebaseAuth.getInstance()
         val currentUser = auth.currentUser
 
-        if (currentUser == null) {
-            // Redirect to login if not authenticated
-            val navController = findNavController(R.id.nav_host_fragment)
-            navController.navigate(R.id.loginFragment)
-        }
-
+        // Initialize NavController and BottomNavigationView
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         navController = navHostFragment.navController
 
-        val bottomNavigationView: BottomNavigationView = findViewById(R.id.bottom_navigation)
-
+        bottomNavigationView = findViewById(R.id.bottom_navigation)
         NavigationUI.setupWithNavController(bottomNavigationView, navController)
 
-//        bottomNavigationView.setOnNavigationItemSelectedListener { item ->
-//            val fragment: Fragment = when (item.itemId) {
-//                R.id.nav_settings -> SettingsFragment.newInstance()
-////                R.id.nav_add_post -> AddPostFragment.newInstance()
-////                R.id.nav_user_posts -> UserPostsFragment.newInstance()
-////                R.id.nav_feed -> FeedFragment.newInstance()
-//                else -> throw IllegalArgumentException("Unexpected item ID")
-//            }
-//            supportFragmentManager.beginTransaction()
-//                .replace(R.id.nav_host_fragment, fragment)
-//                .commit()
-//            true
-//        }
-//
-//        // Set default fragment
+        // Redirect to login if not authenticated
+        if (currentUser == null) {
+            navController.navigate(R.id.loginFragment)
+        }
+
+        // Handle navigation destination changes to show or hide BottomNavigationView
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            when (destination.id) {
+                R.id.loginFragment, R.id.registerFragment -> {
+                    bottomNavigationView.visibility = View.GONE
+                }
+                else -> {
+                    bottomNavigationView.visibility = View.VISIBLE
+                }
+            }
+        }
+
+        // Set default fragment
         if (savedInstanceState == null) {
             bottomNavigationView.selectedItemId = R.id.settingsFragment
         }
