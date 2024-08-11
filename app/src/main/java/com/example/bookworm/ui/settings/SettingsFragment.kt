@@ -18,6 +18,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
 import com.example.bookworm.MainActivity
 import com.example.bookworm.databinding.FragmentRegisterBinding
 import com.example.bookworm.ui.userProfile.ProfileFragment
@@ -34,10 +35,7 @@ class SettingsFragment : Fragment() {
         viewModel = ViewModelProvider(requireActivity()).get(AuthViewModel::class.java)
 
         // Populate user data
-        val userName = viewModel.getUserName()
-        val userEmail = viewModel.getUserEmail()
-        binding.userName.text = userName
-        binding.email.text = userEmail
+        populateUserData()
 
         // Navigate to profile fragment
         binding.editUserButton.setOnClickListener {
@@ -50,6 +48,34 @@ class SettingsFragment : Fragment() {
         }
 
         return binding.root
+    }
+
+    private fun populateUserData() {
+        val userName = viewModel.getUserName()
+        val userEmail = viewModel.getUserEmail()
+        binding.userName.text = userName
+        binding.email.text = userEmail
+
+        // Load profile image
+        val currentUser = FirebaseAuth.getInstance().currentUser
+        currentUser?.let { user ->
+            val photoUrl = user.photoUrl
+            if (photoUrl != null) {
+                Glide.with(this)
+                    .load(photoUrl)
+                    .placeholder(R.drawable.default_avatar)
+                    .error(R.drawable.default_avatar)
+                    .into(binding.profileImage)
+            } else {
+                binding.profileImage.setImageResource(R.drawable.default_avatar)
+            }
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        // Refresh user data when returning to this fragment
+        populateUserData()
     }
 
     private fun signOutAndNavigateToLogin() {

@@ -66,8 +66,6 @@ class ProfileFragment : Fragment() {
             } else {
                 updateUserProfile()
             }
-            // Navigate back or close fragment
-            findNavController().navigate(R.id.action_profileFragment_to_settingsFragment)
         }
 
         binding.cancelButton.setOnClickListener {
@@ -116,14 +114,15 @@ class ProfileFragment : Fragment() {
                                 .addOnCompleteListener { emailTask ->
                                     if (emailTask.isSuccessful) {
                                         Toast.makeText(context, "Profile updated successfully", Toast.LENGTH_SHORT).show()
+                                        navigateBackToSettings()
                                     } else {
                                         Toast.makeText(context, "Failed to update email: ${emailTask.exception?.message}", Toast.LENGTH_SHORT).show()
                                     }
                                 }
                         } else {
                             Toast.makeText(context, "Profile updated successfully", Toast.LENGTH_SHORT).show()
+                            navigateBackToSettings()
                         }
-
                     } else {
                         Toast.makeText(context, "Failed to update profile: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
                     }
@@ -147,6 +146,7 @@ class ProfileFragment : Fragment() {
                                 Toast.makeText(context, "Profile image updated successfully", Toast.LENGTH_SHORT).show()
                                 // Update user profile
                                 updateUserProfile()
+                                navigateBackToSettings()
                             } else {
                                 Toast.makeText(context, "Failed to update profile image", Toast.LENGTH_SHORT).show()
                             }
@@ -170,6 +170,10 @@ class ProfileFragment : Fragment() {
             imageUri = data.data
             binding.profileImage.setImageURI(imageUri)
         }
+    }
+
+    private fun navigateBackToSettings() {
+        findNavController().navigate(R.id.action_profileFragment_to_settingsFragment)
     }
 
     override fun onDestroyView() {
