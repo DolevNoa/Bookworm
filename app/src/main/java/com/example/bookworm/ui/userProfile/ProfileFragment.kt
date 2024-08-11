@@ -76,6 +76,11 @@ class ProfileFragment : Fragment() {
             // Navigate back or close fragment
             findNavController().navigate(R.id.action_profileFragment_to_settingsFragment)
         }
+
+        // Set up the return button
+        binding.returnButton.setOnClickListener {
+            findNavController().navigateUp()
+        }
     }
 
     private fun populateUserData() {
@@ -156,6 +161,7 @@ class ProfileFragment : Fragment() {
             binding.profileImage.setImageURI(imageUri)
         }
     }
+
 
     private fun navigateBackToSettings() {
         findNavController().navigate(R.id.action_profileFragment_to_settingsFragment)

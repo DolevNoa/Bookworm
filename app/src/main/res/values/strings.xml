@@ -42,5 +42,6 @@
     <string name="log_out">Log Out</string>
     <string name="userName">John Doe</string>
     <string name="SaveChanges">Save Changes</string>
+    <string name="return_button">go back</string>
 
 </resources>

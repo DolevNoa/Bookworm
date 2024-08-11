@@ -10,6 +10,18 @@
     android:orientation="vertical"
     tools:context=".ui.userProfile.ProfileFragment">
 
+    <!-- Return Button -->
+    <ImageButton
+        android:id="@+id/returnButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:src="@drawable/ic_back"
+        android:contentDescription="@string/return_button"
+        android:background="?attr/selectableItemBackground" />
+
     <androidx.cardview.widget.CardView
         android:layout_width="160dp"
         android:layout_height="160dp"
@@ -25,8 +37,7 @@
             android:clickable="true"
             android:contentDescription="@string/profile_image"
             android:scaleType="centerCrop"
-            android:src="@drawable/default_avatar"
-            />
+            android:src="@drawable/default_avatar" />
 
     </androidx.cardview.widget.CardView>
 
@@ -47,7 +58,6 @@
         android:inputType="text"
         android:padding="10dp" />
 
-
     <Button
         android:id="@+id/updateButton"
         android:layout_width="wrap_content"
@@ -62,4 +72,5 @@
         android:layout_marginTop="20dp"
         android:backgroundTint="@color/red"
         android:text="@string/cancel" />
+
 </LinearLayout>
