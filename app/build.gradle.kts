@@ -42,6 +42,7 @@ android {
 
 dependencies {
     implementation(libs.firebase.firestore.ktx)
+    implementation(libs.firebase.storage.ktx)
     val appcompat_version = "1.7.0"
     val nav_version = "2.7.7"
 
@@ -52,6 +53,13 @@ dependencies {
     implementation("androidx.appcompat:appcompat:$appcompat_version")
     // For loading and tinting drawables on older versions of the platform
     implementation("androidx.appcompat:appcompat-resources:$appcompat_version")
+
+    // Glide
+    implementation("com.github.bumptech.glide:glide:4.15.1")
+    annotationProcessor("com.github.bumptech.glide:compiler:4.15.1")
+
+    implementation("androidx.cardview:cardview:1.0.0")
+
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
