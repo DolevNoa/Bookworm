@@ -41,6 +41,7 @@ android {
 }
 
 dependencies {
+    implementation(libs.firebase.firestore.ktx)
     val appcompat_version = "1.7.0"
     val nav_version = "2.7.7"
 
