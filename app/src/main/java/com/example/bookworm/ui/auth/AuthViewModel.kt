@@ -3,6 +3,7 @@ package com.example.bookworm.ui.auth
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.google.firebase.auth.FirebaseAuth
 
 class AuthViewModel : ViewModel() {
 
@@ -22,6 +23,20 @@ class AuthViewModel : ViewModel() {
 
     enum class NavigationDestination {
         LOGIN, REGISTER, OUT, MAIN
+    }
+
+    private val auth: FirebaseAuth = FirebaseAuth.getInstance()
+
+    fun getUserName(): String {
+        return auth.currentUser?.displayName ?: ""
+    }
+
+    fun getUserEmail(): String {
+        return auth.currentUser?.email ?: ""
+    }
+
+    fun logout() {
+        auth.signOut()
     }
 }
 
