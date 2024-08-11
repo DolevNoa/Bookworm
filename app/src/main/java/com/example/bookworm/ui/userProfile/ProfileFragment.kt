@@ -1,6 +1,5 @@
 package com.example.bookworm.ui.userProfile
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,96 +10,96 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.bookworm.R
+import androidx.lifecycle.ViewModelProvider
+import com.example.bookworm.databinding.FragmentProfileBinding
+import com.example.bookworm.ui.auth.AuthViewModel
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.UserProfileChangeRequest
+import com.google.firebase.firestore.FirebaseFirestore
 
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [ProfileFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class ProfileFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    private lateinit var profileImage: ImageView
-    private lateinit var fullNameEditText: EditText
-    private lateinit var emailEditText: EditText
-    private lateinit var phoneEditText: EditText
-    private lateinit var saveButton: Button
+    private var _binding: FragmentProfileBinding? = null
+    private val binding get() = _binding!!
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private lateinit var viewModel: AuthViewModel
+    private lateinit var auth: FirebaseAuth
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_profile, container, false)
-
-        // Initialize views
-        profileImage = view.findViewById(R.id.profileImage)
-        fullNameEditText = view.findViewById(R.id.FullNameEditText)
-        emailEditText = view.findViewById(R.id.EmailEditText)
-        phoneEditText = view.findViewById(R.id.PhoneEditText)
-        saveButton = view.findViewById(R.id.button)
-
-        // Set click listener for the profile image to change the picture
-        profileImage.setOnClickListener {
-            // Implement an image picker here
-        }
-
-        // Set click listener for the save button to save the profile information
-        saveButton.setOnClickListener {
-            saveUserProfile()
-        }
-
-        return view
+    ): View {
+        _binding = FragmentProfileBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
-    private fun saveUserProfile() {
-        val fullName = fullNameEditText.text.toString()
-        val email = emailEditText.text.toString()
-        val phone = phoneEditText.text.toString()
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-        // Save data to SharedPreferences
-        val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE) ?: return
-        with(sharedPref.edit()) {
-            putString("USER_FULL_NAME", fullName)
-            putString("USER_EMAIL", email)
-            putString("USER_PHONE", phone)
-            apply()
+        viewModel = ViewModelProvider(requireActivity())[AuthViewModel::class.java]
+        auth = FirebaseAuth.getInstance()
+
+        // Populate fields with current user data
+        populateUserData()
+
+        // Set up click listeners
+        binding.profileImage.setOnClickListener {
+            // Implement image picker functionality here
         }
 
-        // Show a confirmation message
-        Toast.makeText(activity, "Profile saved", Toast.LENGTH_SHORT).show()
+        binding.button.setOnClickListener {
+            updateUserProfile()
+        }
+    }
+
+    private fun populateUserData() {
+        val currentUser = auth.currentUser
+        currentUser?.let { user ->
+            binding.FullNameEditText.setText(user.displayName)
+            binding.EmailEditText.setText(user.email)
+        }
+    }
+
+    private fun updateUserProfile() {
+        val newDisplayName = binding.FullNameEditText.text.toString()
+        val newEmail = binding.EmailEditText.text.toString()
+
+        val user = auth.currentUser
+        user?.let { firebaseUser ->
+            val profileUpdates = UserProfileChangeRequest.Builder()
+                .setDisplayName(newDisplayName)
+                .build()
+
+            firebaseUser.updateProfile(profileUpdates)
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        // Update email if changed
+                        if (newEmail != firebaseUser.email) {
+                            firebaseUser.updateEmail(newEmail)
+                                .addOnCompleteListener { emailTask ->
+                                    if (emailTask.isSuccessful) {
+                                        Toast.makeText(context, "Profile updated successfully", Toast.LENGTH_SHORT).show()
+                                    } else {
+                                        Toast.makeText(context, "Failed to update email: ${emailTask.exception?.message}", Toast.LENGTH_SHORT).show()
+                                    }
+                                }
+                        } else {
+                            Toast.makeText(context, "Profile updated successfully", Toast.LENGTH_SHORT).show()
+                        }
+
+                    } else {
+                        Toast.makeText(context, "Failed to update profile: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
+                    }
+                }
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment ProfileFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            ProfileFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+        fun newInstance() = ProfileFragment()
     }
 }
