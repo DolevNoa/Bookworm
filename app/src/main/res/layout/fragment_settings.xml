@@ -8,6 +8,7 @@ android:layout_gravity="center"
 android:layout_margin="20dp"
 android:gravity="center_horizontal"
 android:orientation="vertical"
+android:padding="16dp"
 tools:context=".ui.settings.SettingsFragment">
 
 <androidx.cardview.widget.CardView
@@ -32,15 +33,15 @@ tools:context=".ui.settings.SettingsFragment">
 
 <TextView
     android:id="@+id/fullNamelabel"
-    android:layout_width="200dp"
-    android:layout_height="40dp"
-    android:layout_marginTop="42dp"
+    android:layout_width="250dp"
+    android:layout_height="48dp"
+    android:layout_marginTop="20dp"
     android:padding="5dp"
     android:text="@string/full_name" />
 
 <TextView
     android:id="@+id/userName"
-    android:layout_width="200dp"
+    android:layout_width="250dp"
     android:layout_height="48dp"
     android:layout_marginTop="0dp"
     android:text="@string/userName"
@@ -48,17 +49,17 @@ tools:context=".ui.settings.SettingsFragment">
 
 <TextView
     android:id="@+id/emailLabel"
-    android:layout_width="200dp"
-    android:layout_height="40dp"
-    android:layout_marginTop="48dp"
+    android:layout_width="250dp"
+    android:layout_height="48dp"
+    android:layout_marginTop="20dp"
     android:padding="5dp"
     android:text="@string/email" />
 
 
 <TextView
     android:id="@+id/email"
-    android:layout_width="200dp"
-    android:layout_height="40dp"
+    android:layout_width="250dp"
+    android:layout_height="48dp"
     android:layout_marginTop="0dp"
     android:padding="5dp"
     android:text="@string/userEmail" />

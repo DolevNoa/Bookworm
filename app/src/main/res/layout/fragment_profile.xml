@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:layout_gravity="center"
     android:layout_margin="20dp"
+    android:padding="16dp"
     android:gravity="center_horizontal"
     android:orientation="vertical"
     tools:context=".ui.userProfile.ProfileFragment">
@@ -43,15 +44,15 @@
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="200dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="42dp"
-        android:padding="5dp"
+        android:layout_width="250dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="20dp"
+        android:padding="10dp"
         android:text="@string/full_name" />
 
     <EditText
         android:id="@+id/FullNameEditText"
-        android:layout_width="200dp"
+        android:layout_width="250dp"
         android:layout_height="48dp"
         android:layout_marginTop="0dp"
         android:hint="@string/full_name"
