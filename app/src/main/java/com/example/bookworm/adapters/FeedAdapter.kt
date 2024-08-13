@@ -30,11 +30,15 @@ class FeedAdapter(private val bookPosts: List<BookPost>) : RecyclerView.Adapter<
         private val ratingView: AppCompatRatingBar = itemView.findViewById(R.id.postRating)
         private val descView: TextView = itemView.findViewById(R.id.postDescription)
         private val imageView: ImageView = itemView.findViewById(R.id.postImage)
+        private val profileimageView: ImageView = itemView.findViewById(R.id.postProfileImage)
         private val dateCreatedView: TextView = itemView.findViewById(R.id.postCreatedDate)
+        private val userNameView: TextView = itemView.findViewById(R.id.postUserName)
+
 
 
         fun bind(bookPost: BookPost) {
             titleView.text = bookPost.title
+            userNameView.text = bookPost.username
             ratingView.rating = bookPost.rating.toFloat() // Use setRating() for RatingBar
             descView.text = bookPost.desc
             dateCreatedView.text = bookPost.createdDate
@@ -43,6 +47,10 @@ class FeedAdapter(private val bookPosts: List<BookPost>) : RecyclerView.Adapter<
                 .load(bookPost.image) // URL or resource ID
                 .placeholder(R.drawable.placeholder_book_image) // Optional placeholder
                 .into(imageView)
+            Glide.with(itemView.context)
+                .load(bookPost.proflieImage) // URL or resource ID
+                .placeholder(R.drawable.placeholder_book_image) // Optional placeholder
+                .into(profileimageView)
         }
     }
 }
