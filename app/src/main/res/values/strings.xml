@@ -30,7 +30,7 @@
     <string name="book_name_label">Book Name:</string>
     <string name="book_name_edit_text_hint">Enter the book title</string>
     <string name="description_label">Description:</string>
-    <string name="description_edit_text_hint">Enter a short description about the book</string>
+    <string name="description_edit_text_hint">Enter book description</string>
     <string name="rating_label">Rating</string>
     <string name="submit_book_btn_text">Add recommendation</string>
     <string name="choose_photo_btn_text">Choose Photo</string>
