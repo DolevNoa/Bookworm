@@ -116,7 +116,7 @@ class RegisterFragment : Fragment() {
             .addOnSuccessListener {
                 // Profile saved successfully
                 Toast.makeText(context, "Registration successful", Toast.LENGTH_SHORT).show()
-                findNavController().navigate(R.id.action_registerFragment_to_loginFragment)
+                findNavController().navigate(R.id.action_registerFragment_to_feedFragment)
             }
             .addOnFailureListener { e ->
                 // Handle error
