@@ -19,7 +19,6 @@ import com.example.bookworm.databinding.FragmentAddBookRecommendationBinding
 import com.example.bookworm.data.books.BookRecommendation
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 
