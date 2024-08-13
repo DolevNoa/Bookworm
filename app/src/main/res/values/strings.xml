@@ -28,11 +28,11 @@
     <string name="userEmail">john.doe@gmail.com</string>
     <!-- Strings related to upload book -->
     <string name="book_name_label">Book Name:</string>
-    <string name="book_name_edit_text_hint">Enter the book name</string>
+    <string name="book_name_edit_text_hint">Enter the book title</string>
     <string name="description_label">Description:</string>
-    <string name="description_edit_text_hint">Enter a description</string>
+    <string name="description_edit_text_hint">Enter a short description about the book</string>
     <string name="rating_label">Rating</string>
-    <string name="submit_book_btn_text">Submit</string>
+    <string name="submit_book_btn_text">Add recommendation</string>
     <string name="choose_photo_btn_text">Choose Photo</string>
     <string name="book_image_content_desc">Book Image</string>
 
@@ -43,5 +43,6 @@
     <string name="userName">John Doe</string>
     <string name="SaveChanges">Save Changes</string>
     <string name="return_button">go back</string>
+    <string name="rateBooklable">Click to rate:</string>
 
 </resources>
