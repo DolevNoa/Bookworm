@@ -52,8 +52,8 @@ class MainActivity : AppCompatActivity() {
 
         if (savedInstanceState == null) {
             if (currentUser != null) {
-                // User is logged in; navigate to the SettingsFragment
-                navController.navigate(R.id.FeedFragment)
+                // User is logged in; navigate to the FeedFragment
+                navController.navigate(R.id.feedFragment)
             } else {
                 // User is not logged in; navigate to the LoginFragment
                 navController.navigate(R.id.loginFragment)
