@@ -36,7 +36,7 @@
             android:stepSize="0.5"
             android:rating="0.0"
             android:isIndicator="true"
-            android:layout_marginTop="8dp"/>
+        android:layout_marginTop="8dp"/>
 
         <ImageView
             android:id="@+id/postImage"
@@ -46,7 +46,7 @@
             android:layout_marginTop="8dp"/>
 
         <TextView
-            android:id="@+id/CreatedDate"
+            android:id="@+id/postCreatedDate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="TextView"

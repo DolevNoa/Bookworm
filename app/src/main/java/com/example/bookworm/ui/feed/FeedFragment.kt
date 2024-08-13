@@ -28,7 +28,7 @@ class FeedFragment : Fragment() {
         // Create a sample list of BookPost items
         val bookPosts = listOf(
             BookPost("Book 1", 5, "Description 1", "https://example.com/image1.jpg", "2024-08-12", "User1"),
-            BookPost("Book 2", 4, "Description 2", "https://example.com/image2.jpg", "2024-08-12", "User2")
+            BookPost("Book 2", 4, "Description 2", "https://example.com/image2.jpg", "2023-05-06", "User2")
             // Add more BookPost items with images here
         )
 

@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.bookworm.R
 import com.example.bookworm.models.BookPost
+import androidx.appcompat.widget.AppCompatRatingBar
 
 class FeedAdapter(private val bookPosts: List<BookPost>) : RecyclerView.Adapter<FeedAdapter.BookPostViewHolder>() {
 
@@ -26,15 +27,17 @@ class FeedAdapter(private val bookPosts: List<BookPost>) : RecyclerView.Adapter<
 
     class BookPostViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val titleView: TextView = itemView.findViewById(R.id.postTitle)
-        private val ratingView: TextView = itemView.findViewById(R.id.postRating)
+        private val ratingView: AppCompatRatingBar = itemView.findViewById(R.id.postRating)
         private val descView: TextView = itemView.findViewById(R.id.postDescription)
         private val imageView: ImageView = itemView.findViewById(R.id.postImage)
+        private val dateCreatedView: TextView = itemView.findViewById(R.id.postCreatedDate)
+
 
         fun bind(bookPost: BookPost) {
             titleView.text = bookPost.title
-            ratingView.text = bookPost.rating.toString()
+            ratingView.rating = bookPost.rating.toFloat() // Use setRating() for RatingBar
             descView.text = bookPost.desc
-
+            dateCreatedView.text = bookPost.createdDate
             // Load image using Glide
             Glide.with(itemView.context)
                 .load(bookPost.image) // URL or resource ID
