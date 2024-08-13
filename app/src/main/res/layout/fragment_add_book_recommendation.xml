@@ -9,6 +9,7 @@
     android:padding="16dp"
     android:gravity="center_horizontal"
     android:orientation="vertical"
+    android:id="@+id/scrollView"
     tools:context=".ui.books.AddBookRecommendationFragment">
 
     <LinearLayout
