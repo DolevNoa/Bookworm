@@ -23,8 +23,8 @@
             android:id="@+id/action_loginFragment_to_registerFragment"
             app:destination="@id/registerFragment" />
         <action
-            android:id="@+id/action_loginFragment_to_FeedFragment"
-            app:destination="@id/FeedFragment" />
+            android:id="@+id/action_loginFragment_to_feedFragment"
+            app:destination="@id/feedFragment" />
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
@@ -46,15 +46,36 @@
         <action
             android:id="@+id/action_settingsFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_settingsFragment_to_addBookRecommendationFragment"
+            app:destination="@id/addBookRecommendationFragment" />
+        <action
+            android:id="@+id/action_settingsFragment_to_feedFragment"
+            app:destination="@id/feedFragment" />
     </fragment>
     <fragment
-        android:id="@+id/FeedFragment"
+        android:id="@+id/feedFragment"
         android:name="com.example.bookworm.ui.feed.FeedFragment"
         android:label="fragment_feed"
         tools:layout="@layout/fragment_feed" >
         <action
-            android:id="@+id/action_FeedFragment_to_loginFragment"
+            android:id="@+id/action_feedFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_feedFragment_to_addBookRecommendationFragment"
+            app:destination="@id/addBookRecommendationFragment" />
+        <action
+            android:id="@+id/action_feedFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addBookRecommendationFragment"
+        android:name="com.example.bookworm.ui.books.AddBookRecommendationFragment"
+        android:label="fragment_add_book_recommendation"
+        tools:layout="@layout/fragment_add_book_recommendation" >
+        <action
+            android:id="@+id/action_addBookRecommendationFragment_to_feedFragment"
+            app:destination="@id/feedFragment" />
     </fragment>
 
 

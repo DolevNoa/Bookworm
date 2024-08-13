@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/FeedFragment"
+        android:id="@+id/feedFragment"
         android:name="com.example.bookworm.ui.feed.FeedFragment"
         android:icon="@drawable/ic_home"
         android:title="Feed" />
     <item
-        android:id="@+id/nav_add_post"
+        android:id="@+id/addBookRecommendationFragment"
+        android:name="com.example.bookworm.ui.books.AddBookRecommendationFragment"
         android:icon="@drawable/ic_add"
         android:title="Add Book" />
     <item
