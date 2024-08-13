@@ -17,11 +17,18 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.bookworm.R
 import com.example.bookworm.databinding.FragmentAddBookRecommendationBinding
 import com.example.bookworm.data.books.BookRecommendation
+import com.google.firebase.Timestamp
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 
 class AddBookRecommendationFragment : Fragment() {
 
     private var _binding: FragmentAddBookRecommendationBinding? = null
     private val binding get() = _binding!!
+
+    private lateinit var auth: FirebaseAuth
 
     private lateinit var viewModel: AddBookViewModel
 
@@ -33,9 +40,23 @@ class AddBookRecommendationFragment : Fragment() {
     private lateinit var uploadProgress: ProgressBar
 
     private var imageUrl: String? = null
+    private lateinit var storage: FirebaseStorage
+    private lateinit var storageRef: StorageReference
 
-    companion object {
-        fun newInstance() = AddBookRecommendationFragment()
+    private val pickImage = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
+        uri?.let {
+            binding.imageViewBook.setImageURI(it)
+            uploadImageToFirebaseStorage(it) { url ->
+                imageUrl = url
+            }
+        }
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        // Initialize Firebase Auth
+        auth = FirebaseAuth.getInstance()
     }
 
     override fun onCreateView(
@@ -51,6 +72,21 @@ class AddBookRecommendationFragment : Fragment() {
         initializeViews()
         setupListeners()
         viewModel = ViewModelProvider(this).get(AddBookViewModel::class.java)
+
+        storage = FirebaseStorage.getInstance()
+        storageRef = storage.reference
+
+        // Adjust layout when keyboard is visible
+        view.viewTreeObserver.addOnGlobalLayoutListener {
+            val rect = android.graphics.Rect()
+            view.getWindowVisibleDisplayFrame(rect)
+            val screenHeight = view.height
+            val keypadHeight = screenHeight - rect.bottom
+            if (keypadHeight > screenHeight * 0.15) {
+                // Keyboard is visible
+                // Adjust layout or scroll if necessary
+            }
+        }
     }
 
     private fun initializeViews() {
@@ -70,6 +106,17 @@ class AddBookRecommendationFragment : Fragment() {
         imageViewBook.setOnClickListener {
             pickImage.launch("image/*")
         }
+
+        // Ensure the view scrolls to the EditText when it's focused
+        descriptionInput.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) {
+                binding.scrollView.post {
+                    // Scroll to the EditText, but adjust as needed
+                    binding.scrollView.smoothScrollTo(0, descriptionInput.top)
+                }
+            }
+
+        }
     }
 
     private fun submitBookRecommendation() {
@@ -83,10 +130,12 @@ class AddBookRecommendationFragment : Fragment() {
         }
 
         val book = BookRecommendation(
+            creator = auth.currentUser?.uid ?: "",
+            timestamp = Timestamp.now(),
             bookName = bookName,
             description = description,
             rating = rating,
-            imageUrl = imageUrl ?: "" // Use the imageUrl if available
+            imageUrl = imageUrl ?: ""
         )
 
         viewModel.addBookRecommendation(book)
@@ -94,24 +143,34 @@ class AddBookRecommendationFragment : Fragment() {
         clearForm()
     }
 
-    private val pickImage = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
-        uri?.let {
-            binding.imageViewBook.setImageURI(it)
-            // TODO: Upload the image to get a URL
-            // Example: uploadImage(uri) { url -> imageUrl = url }
-        }
+    private fun uploadImageToFirebaseStorage(uri: Uri, onComplete: (String?) -> Unit) {
+        val fileRef = storageRef.child("book_images/${System.currentTimeMillis()}.jpg")
+        fileRef.putFile(uri)
+            .addOnSuccessListener {
+                fileRef.downloadUrl.addOnSuccessListener { downloadUri ->
+                    onComplete(downloadUri.toString())
+                }
+            }
+            .addOnFailureListener {
+                Toast.makeText(context, "Failed to upload image", Toast.LENGTH_SHORT).show()
+                onComplete(null)
+            }
     }
 
     private fun clearForm() {
         bookNameInput.text.clear()
         descriptionInput.text.clear()
         ratingBar.rating = 0f
-        imageViewBook.setImageResource(R.drawable.placeholder_book_image) // Set a default image
+        imageViewBook.setImageResource(R.drawable.placeholder_book_image)
         imageUrl = null
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    companion object {
+        fun newInstance() = AddBookRecommendationFragment()
     }
 }
