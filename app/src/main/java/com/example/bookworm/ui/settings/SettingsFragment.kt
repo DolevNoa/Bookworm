@@ -50,11 +50,24 @@ class SettingsFragment : Fragment() {
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        // Fetch user profile when the view is created
+        viewModel.fetchUserProfile()
+
+        // Populate user data into the UI
+        populateUserData()
+    }
+
     private fun populateUserData() {
-        val userName = viewModel.getUserName()
-        val userEmail = viewModel.getUserEmail()
-        binding.userName.text = userName
-        binding.email.text = userEmail
+        viewModel.fullName.observe(viewLifecycleOwner) { userName ->
+            binding.userName.text = userName
+        }
+
+        viewModel.email.observe(viewLifecycleOwner) { userEmail ->
+            binding.email.text = userEmail
+        }
 
         // Load profile image
         val currentUser = FirebaseAuth.getInstance().currentUser
@@ -70,12 +83,6 @@ class SettingsFragment : Fragment() {
                 binding.profileImage.setImageResource(R.drawable.default_avatar)
             }
         }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        // Refresh user data when returning to this fragment
-        populateUserData()
     }
 
     private fun signOutAndNavigateToLogin() {

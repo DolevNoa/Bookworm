@@ -19,6 +19,8 @@ import com.example.bookworm.databinding.FragmentProfileBinding
 import com.example.bookworm.ui.auth.AuthViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.UserProfileChangeRequest
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.SetOptions
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 
@@ -111,13 +113,28 @@ class ProfileFragment : Fragment() {
             firebaseUser.updateProfile(profileUpdates)
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
-                        Toast.makeText(context, "Profile updated successfully", Toast.LENGTH_SHORT).show()
-                        navigateBackToSettings()
+                        updateFirestoreUserProfile(firebaseUser.uid, newDisplayName)
                     } else {
                         Toast.makeText(context, "Failed to update profile: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
                     }
                 }
         }
+    }
+
+    private fun updateFirestoreUserProfile(userId: String, newDisplayName: String) {
+        val userProfile = hashMapOf(
+            "fullName" to newDisplayName
+        )
+
+        FirebaseFirestore.getInstance().collection("users").document(userId)
+            .set(userProfile, SetOptions.merge())  // Use merge to avoid overwriting other fields
+            .addOnSuccessListener {
+                Toast.makeText(context, "Profile updated successfully", Toast.LENGTH_SHORT).show()
+                navigateBackToSettings()
+            }
+            .addOnFailureListener { e ->
+                Toast.makeText(context, "Failed to update profile in Firestore: ${e.message}", Toast.LENGTH_SHORT).show()
+            }
     }
 
     private fun uploadImageToFirebaseStorage() {
@@ -134,9 +151,8 @@ class ProfileFragment : Fragment() {
                         ?.addOnCompleteListener { task ->
                             if (task.isSuccessful) {
                                 Toast.makeText(context, "Profile image updated successfully", Toast.LENGTH_SHORT).show()
-                                // Update user profile
+                                // Call updateUserProfile to handle both name and image update
                                 updateUserProfile()
-                                navigateBackToSettings()
                             } else {
                                 Toast.makeText(context, "Failed to update profile image", Toast.LENGTH_SHORT).show()
                             }
