@@ -3,6 +3,8 @@ package com.example.bookworm.ui.books
 import android.util.Log
 import com.example.bookworm.data.books.BookRecommendation
 import com.example.bookworm.data.books.BookRepository
+import com.google.android.gms.tasks.Task
+import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.tasks.await
 
@@ -11,16 +13,15 @@ class BookRepositoryImpl : BookRepository {
     private val collectionRef = firestore.collection("bookRecommendation")
 
     override suspend fun addBookRecommendation(book: BookRecommendation) {
-        collectionRef.add(book)
-            .addOnSuccessListener {
-                // Handle success
-                println("Book recommendation added successfully.")
-            }
-            .addOnFailureListener { e ->
-                // Handle failure
-                println("Error adding book recommendation: ${e.message}")
-            }
+        try {
+            collectionRef.add(book).await()
+            Log.d("BookRepositoryImpl", "Book recommendation added successfully.")
+        } catch (e: Exception) {
+            Log.e("BookRepositoryImpl", "Error adding book recommendation: ${e.message}")
+            throw e
+        }
     }
+
 override suspend fun getBookRecommendations(): List<BookRecommendation> {
     return try {
         val result = collectionRef.get().await()
