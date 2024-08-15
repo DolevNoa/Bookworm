@@ -40,6 +40,22 @@ override suspend fun getBookRecommendations(): List<BookRecommendation> {
         emptyList()
     }
 }
-
+    suspend fun getBookRecommendations(userId: String): List<BookRecommendation> {
+        return try {
+            val result = collectionRef
+                .whereEqualTo("creator", userId) // Filter posts by creator ID
+                .get()
+                .await()
+            val books = mutableListOf<BookRecommendation>()
+            for (document in result) {
+                val book = document.toObject(BookRecommendation::class.java)
+                books.add(book)
+            }
+            books
+        } catch (e: Exception) {
+            Log.e("BookRepositoryImpl", "Error getting book recommendations: ${e.message}")
+            emptyList()
+        }
+    }
 }
 

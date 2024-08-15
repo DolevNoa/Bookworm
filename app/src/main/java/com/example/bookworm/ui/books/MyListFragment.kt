@@ -1,4 +1,5 @@
-package com.example.bookworm.ui.feed
+package com.example.bookworm.ui.mylist
+
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -16,7 +17,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class FeedFragment : Fragment() {
+class MyListFragment : Fragment() {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var feedAdapter: FeedAdapter
@@ -26,32 +27,33 @@ class FeedFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_feed, container, false)
+        val view = inflater.inflate(R.layout.fragment_my_list, container, false)
 
-        recyclerView = view.findViewById(R.id.recyclerFeed)
+        recyclerView = view.findViewById(R.id.recyclerMyList)
         recyclerView.layoutManager = LinearLayoutManager(context)
 
         feedAdapter = FeedAdapter(emptyList()) // Initialize with empty list
         recyclerView.adapter = feedAdapter
 
-        // Fetch book recommendations from the ViewModel
-        fetchBookRecommendations()
+        // Fetch book recommendations specific to the user
+        fetchUserBooks()
 
         return view
     }
-    private fun fetchBookRecommendations() {
+
+    private fun fetchUserBooks() {
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                val bookRecommendations = viewModel.getBookRecommendations()
+                val bookRecommendations = viewModel.getUserBookRecommendations()
                 withContext(Dispatchers.Main) {
                     // Log the fetched data
-                    Log.d("FeedFragment", "Fetched book recommendations: $bookRecommendations")
+                    Log.d("MyListFragment", "Fetched user books: $bookRecommendations")
                     // Update the adapter with the fetched book recommendations
                     feedAdapter.updateData(bookRecommendations)
                 }
             } catch (e: Exception) {
                 // Handle exceptions (e.g., show error message)
-                Log.e("FeedFragment", "Error fetching book recommendations", e)
+                Log.e("MyListFragment", "Error fetching user books", e)
             }
         }
     }

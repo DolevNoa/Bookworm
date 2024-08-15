@@ -44,5 +44,10 @@
     <string name="SaveChanges">Save Changes</string>
     <string name="return_button">go back</string>
     <string name="rateBooklable">Click to rate:</string>
+    <string name="my_list_title">My book posts:</string>
+
+
+
+
 
 </resources>

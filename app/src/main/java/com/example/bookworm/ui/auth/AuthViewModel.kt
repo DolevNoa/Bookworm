@@ -63,21 +63,27 @@ class AuthViewModel : ViewModel() {
     fun logout() {
         auth.signOut()
     }
-}
 
-// Event wrapper to handle one-time events
-class Event<out T>(private val content: T) {
-    var hasBeenHandled = false
-        private set
+    // Event wrapper to handle one-time events
+    class Event<out T>(private val content: T) {
+        var hasBeenHandled = false
+            private set
 
-    fun getContentIfNotHandled(): T? {
-        return if (hasBeenHandled) {
-            null
-        } else {
-            hasBeenHandled = true
-            content
+        fun getContentIfNotHandled(): T? {
+            return if (hasBeenHandled) {
+                null
+            } else {
+                hasBeenHandled = true
+                content
+            }
         }
-    }
 
-    fun peekContent(): T = content
+        fun peekContent(): T = content
+    }
 }
+
+//    fun getBooksByCurrentUser() = viewModelScope.launch {
+//        currUser.value?.uid?.let { userId ->
+//            repository.getBooksByUser(userId)
+//        }
+//    }

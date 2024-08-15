@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
@@ -27,7 +28,7 @@
                 android:layout_height="50dp"
                 android:gravity="center"
                 android:paddingTop="10dp"
-                android:text="@string/feed_title"
+                android:text="@string/my_list_title"
                 android:textStyle="bold"
                 android:textColor="@color/blue"
                 android:textSize="30sp"
@@ -35,7 +36,7 @@
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerFeed"
+            android:id="@+id/recyclerMyList"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"

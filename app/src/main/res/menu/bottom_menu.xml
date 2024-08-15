@@ -11,7 +11,8 @@
         android:icon="@drawable/ic_add"
         android:title="Add Book" />
     <item
-        android:id="@+id/nav_user_posts"
+        android:id="@+id/myListFragment"
+        android:name="com.example.bookworm.ui.mylist.MyListFragment"
         android:icon="@drawable/ic_my_posts"
         android:title="My List" />
     <item

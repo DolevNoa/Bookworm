@@ -80,6 +80,18 @@
             android:id="@+id/action_addBookRecommendationFragment_to_feedFragment"
             app:destination="@id/feedFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/myListFragment"
+        android:name="com.example.bookworm.ui.mylist.MyListFragment"
+        android:label="fragment_my_list"
+        tools:layout="@layout/fragment_my_list" >
+        <action
+            android:id="@+id/action_myListFragment_to_feedFragment"
+            app:destination="@id/feedFragment" />
+        <action
+            android:id="@+id/action_myListFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
+    </fragment>
 
 
 </navigation>
