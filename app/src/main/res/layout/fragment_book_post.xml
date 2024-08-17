@@ -86,6 +86,19 @@
                 android:text="TextView"
                 android:textColor="@color/black"
                 android:layout_marginBottom="16dp"/>
+            <Button
+                android:id="@+id/editButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Edit"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/deleteButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Delete"
+                android:visibility="gone" />
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>

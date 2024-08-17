@@ -13,7 +13,7 @@ import android.widget.ProgressBar
 import android.widget.RatingBar
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import com.example.bookworm.R
 import com.example.bookworm.databinding.FragmentAddBookRecommendationBinding
 import com.example.bookworm.data.books.BookRecommendation
@@ -26,10 +26,10 @@ class AddBookRecommendationFragment : Fragment() {
 
     private var _binding: FragmentAddBookRecommendationBinding? = null
     private val binding get() = _binding!!
+    protected val viewModel: HandleBooksViewModel by viewModels()
 
     private lateinit var auth: FirebaseAuth
 
-    private lateinit var viewModel: AddBookViewModel
 
     private lateinit var imageViewBook: ImageView
     private lateinit var bookNameInput: EditText
@@ -70,8 +70,6 @@ class AddBookRecommendationFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         initializeViews()
         setupListeners()
-        viewModel = ViewModelProvider(this).get(AddBookViewModel::class.java)
-
         storage = FirebaseStorage.getInstance()
         storageRef = storage.reference
 
@@ -129,7 +127,7 @@ class AddBookRecommendationFragment : Fragment() {
         }
 
         val book = BookRecommendation(
-            creator = auth.currentUser?.uid ?: "",
+            creator = viewModel.getCurrentUserId() ?: "",
             timestamp = Timestamp.now(),
             bookName = bookName,
             description = description,

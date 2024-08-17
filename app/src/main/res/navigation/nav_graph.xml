@@ -60,7 +60,7 @@
         android:id="@+id/feedFragment"
         android:name="com.example.bookworm.ui.feed.FeedFragment"
         android:label="fragment_feed"
-        tools:layout="@layout/fragment_feed" >
+        tools:layout="@layout/fragment_book_list" >
         <action
             android:id="@+id/action_feedFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
@@ -84,7 +84,7 @@
         android:id="@+id/myListFragment"
         android:name="com.example.bookworm.ui.mylist.MyListFragment"
         android:label="fragment_my_list"
-        tools:layout="@layout/fragment_my_list" >
+        tools:layout="@layout/fragment_book_list" >
         <action
             android:id="@+id/action_myListFragment_to_feedFragment"
             app:destination="@id/feedFragment" />

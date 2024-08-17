@@ -22,7 +22,45 @@ class BookRepositoryImpl : BookRepository {
         }
     }
 
-override suspend fun getBookRecommendations(): List<BookRecommendation> {
+    override suspend fun deleteBookRecommendation(book: BookRecommendation) {
+        try {
+            val querySnapshot = collectionRef
+                .whereEqualTo("timestamp", book.timestamp)
+                .whereEqualTo("creator", book.creator)
+                .get()
+                .await()
+
+            for (document in querySnapshot.documents) {
+                document.reference.delete().await()
+            }
+
+            Log.d("BookRepositoryImpl", "Book recommendation deleted successfully.")
+        } catch (e: Exception) {
+            Log.e("BookRepositoryImpl", "Error deleting book recommendation: ${e.message}")
+            throw e
+        }
+    }
+
+    override suspend fun editBookRecommendation(book: BookRecommendation) {
+        try {
+            val querySnapshot = collectionRef
+                .whereEqualTo("timestamp", book.timestamp)
+                .whereEqualTo("creator", book.creator)
+                .get()
+                .await()
+
+            for (document in querySnapshot.documents) {
+                document.reference.set(book).await()
+            }
+
+            Log.d("BookRepositoryImpl", "Book recommendation updated successfully.")
+        } catch (e: Exception) {
+            Log.e("BookRepositoryImpl", "Error updating book recommendation: ${e.message}")
+            throw e
+        }
+    }
+
+    override suspend fun getBookRecommendations(): List<BookRecommendation> {
     return try {
         val result = collectionRef.get().await()
         val books = mutableListOf<BookRecommendation>()
