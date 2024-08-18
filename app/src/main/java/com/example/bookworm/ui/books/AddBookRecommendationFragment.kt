@@ -2,10 +2,15 @@ package com.example.bookworm.ui.books
 
 import android.net.Uri
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
@@ -14,13 +19,23 @@ import android.widget.RatingBar
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
+import com.bumptech.glide.Glide
 import com.example.bookworm.R
 import com.example.bookworm.databinding.FragmentAddBookRecommendationBinding
 import com.example.bookworm.data.books.BookRecommendation
+import com.example.bookworm.services.bookApi.BookApiService
+import com.example.bookworm.services.bookApi.BookItem
+import com.example.bookworm.services.bookApi.BookResponse
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
+import com.squareup.picasso.Picasso
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 class AddBookRecommendationFragment : Fragment() {
 
@@ -30,9 +45,10 @@ class AddBookRecommendationFragment : Fragment() {
 
     private lateinit var auth: FirebaseAuth
 
+    private lateinit var bookApiService: BookApiService
 
     private lateinit var imageViewBook: ImageView
-    private lateinit var bookNameInput: EditText
+    private lateinit var bookNameInput: AutoCompleteTextView
     private lateinit var descriptionInput: EditText
     private lateinit var ratingBar: RatingBar
     private lateinit var buttonSubmitBook: Button
@@ -56,6 +72,14 @@ class AddBookRecommendationFragment : Fragment() {
 
         // Initialize Firebase Auth
         auth = FirebaseAuth.getInstance()
+
+        // Initialize Retrofit (HTTP Client - for API)
+        val retrofit = Retrofit.Builder()
+            .baseUrl("https://www.googleapis.com/books/v1/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+
+        bookApiService = retrofit.create(BookApiService::class.java)
     }
 
     override fun onCreateView(
@@ -104,16 +128,60 @@ class AddBookRecommendationFragment : Fragment() {
             pickImage.launch("image/*")
         }
 
-        // Ensure the view scrolls to the EditText when it's focused
-        descriptionInput.setOnFocusChangeListener { _, hasFocus ->
-            if (hasFocus) {
-                binding.scrollView.post {
-                    // Scroll to the EditText, but adjust as needed
-                    binding.scrollView.smoothScrollTo(0, descriptionInput.top)
+        // Setup autocomplete listeners to fetch suggestions from the API
+        bookNameInput.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if (s != null && s.length > 2) {
+                    searchBooks(s.toString())
                 }
             }
 
-        }
+            override fun afterTextChanged(s: Editable?) {}
+        })
+    }
+
+    private fun searchBooks(query: String) {
+        val call = bookApiService.searchBooks(query)
+        call.enqueue(object : Callback<BookResponse> {
+            override fun onResponse(call: Call<BookResponse>, response: Response<BookResponse>) {
+                val books = response.body()?.items ?: emptyList()
+                val titles = books.map { it.volumeInfo.title }
+                val adapter = ArrayAdapter(
+                    requireContext(),
+                    android.R.layout.simple_dropdown_item_1line,
+                    titles
+                )
+                bookNameInput.setAdapter(adapter)
+                bookNameInput.showDropDown()
+
+
+                // Handle book selection to display additional info
+                bookNameInput.setOnItemClickListener { _, _, position, _ ->
+                    val selectedBook = books[position]
+                    imageUrl = selectedBook.volumeInfo.imageLinks?.thumbnail
+                    displayBookDetails(selectedBook)
+                }
+            }
+
+            override fun onFailure(call: Call<BookResponse>, t: Throwable) {
+                // Handle error
+            }
+        })
+    }
+
+    private fun displayBookDetails(book: BookItem) {
+        Log.d("BookThumbnail", "Thumbnail URL: ${book.volumeInfo.imageLinks?.thumbnail}")
+
+        val thumbnailUrl = book.volumeInfo.imageLinks?.thumbnail?.replace("http://", "https://")
+
+        Log.d("BookThumbnail", "Thumbnail URL: ${thumbnailUrl}")
+
+        Glide.with(requireContext())
+            .load(thumbnailUrl)
+            .placeholder(R.drawable.placeholder_book_image)
+            .error(R.drawable.placeholder_book_image)
+            .into(imageViewBook)
     }
 
     private fun submitBookRecommendation() {
