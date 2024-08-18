@@ -61,14 +61,14 @@
             android:layout_height="48dp"
             android:layout_marginTop="20dp"
             android:padding="10dp"
-            android:text="@string/description_label"/>
+            android:text="@string/recommendation_label"/>
 
         <EditText
             android:id="@+id/descriptionInput"
             android:layout_width="250dp"
             android:layout_height="150dp"
             android:layout_marginTop="0dp"
-            android:hint="@string/description_edit_text_hint"
+            android:hint="@string/recommendation_edit_text_hint"
             android:padding="8dp"
             android:layout_marginBottom="8dp"
             android:inputType="textMultiLine"
