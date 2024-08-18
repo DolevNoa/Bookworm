@@ -6,9 +6,9 @@
     android:layout_height="match_parent"
     android:layout_gravity="center"
     android:layout_margin="20dp"
-    android:padding="16dp"
     android:gravity="center_horizontal"
     android:orientation="vertical"
+    android:padding="16dp"
     tools:context=".ui.userProfile.ProfileFragment">
 
     <!-- Return Button -->
@@ -59,19 +59,28 @@
         android:inputType="text"
         android:padding="10dp" />
 
-    <Button
-        android:id="@+id/updateButton"
+    <!-- Horizontal LinearLayout for buttons -->
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
-        android:text="@string/SaveChanges" />
+        android:layout_gravity="end"
+        android:orientation="horizontal">
 
-    <Button
-        android:id="@+id/cancelButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:backgroundTint="@color/red"
-        android:text="@string/cancel" />
+        <Button
+            android:id="@+id/updateButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/SaveChanges" />
+
+        <Button
+            android:id="@+id/cancelButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:backgroundTint="@color/red"
+            android:text="@string/cancel" />
+
+    </LinearLayout>
 
 </LinearLayout>
