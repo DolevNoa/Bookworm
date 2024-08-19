@@ -8,12 +8,15 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.bookworm.R
 import com.example.bookworm.adapters.FeedAdapter
 import com.example.bookworm.data.books.BookRecommendation
 import com.example.bookworm.ui.books.HandleBooksViewModel
+import com.example.bookworm.ui.feed.FeedFragment
+import com.example.bookworm.ui.mylist.MyListFragment
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -40,8 +43,14 @@ abstract class BaseBookListFragment : Fragment() {
         feedAdapter = FeedAdapter(
             bookRecommendations = emptyList(),
             onEditClick = { bookRecommendation ->
-                // Handle edit action
-                // Navigate to edit screen or show a dialog
+                val action = when (this) {
+                    is FeedFragment -> R.id.action_feedFragment_to_editBookRecommendationFragment
+                    is MyListFragment -> R.id.action_myListFragment_to_editBookRecommendationFragment
+                    else -> throw IllegalArgumentException("Unknown Fragment")
+                }
+                findNavController().navigate(
+                    action
+                )
                 viewModel.editBookRecommendation(bookRecommendation)
             },
             onDeleteClick = { bookRecommendation ->

@@ -70,6 +70,9 @@
         <action
             android:id="@+id/action_feedFragment_to_settingsFragment"
             app:destination="@id/settingsFragment" />
+        <action
+            android:id="@+id/action_feedFragment_to_editBookRecommendationFragment"
+            app:destination="@id/editBookRecommendationFragment" />
     </fragment>
     <fragment
         android:id="@+id/addBookRecommendationFragment"
@@ -91,7 +94,14 @@
         <action
             android:id="@+id/action_myListFragment_to_settingsFragment"
             app:destination="@id/settingsFragment" />
+        <action
+            android:id="@+id/action_myListFragment_to_editBookRecommendationFragment"
+            app:destination="@id/editBookRecommendationFragment" />
     </fragment>
-
+    <fragment
+        android:id="@+id/editBookRecommendationFragment"
+        android:name="com.example.bookworm.ui.books.EditBookRecommendationFragment"
+        android:label="fragment_edit_book_recommendation"
+        tools:layout="@layout/fragment_edit_book_recommendation" />
 
 </navigation>
