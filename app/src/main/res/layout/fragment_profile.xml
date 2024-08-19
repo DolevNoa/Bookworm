@@ -71,14 +71,16 @@
             android:id="@+id/updateButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/SaveChanges" />
+            android:text="@string/SaveChanges"
+            style="@style/Widget.MaterialComponents.Button" />
 
         <Button
             android:id="@+id/cancelButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:backgroundTint="@color/red"
+            android:layout_marginStart="10dp"
+            android:textColor="@color/red"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:text="@string/cancel" />
 
     </LinearLayout>

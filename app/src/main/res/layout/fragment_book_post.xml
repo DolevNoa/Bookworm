@@ -72,23 +72,30 @@
                 android:scaleType="fitCenter"
                 android:stepSize="1.0" />
 
-            <ImageView
-                android:id="@+id/postImage"
+            <androidx.cardview.widget.CardView
                 android:layout_width="160dp"
                 android:layout_height="240dp"
-                android:layout_gravity="center"
-                android:clickable="true"
-                android:contentDescription="@string/book_image_content_desc"
-                android:scaleType="centerCrop"
-                android:src="@drawable/placeholder_book_image"
                 app:cardCornerRadius="10dp"
-                android:layout_marginBottom="4dp"
-                app:cardElevation="4dp" />
+                android:layout_gravity="center_horizontal"
+                app:cardElevation="4dp">
+
+                <ImageView
+                    android:id="@+id/postImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:clickable="true"
+                    android:contentDescription="@string/book_image_content_desc"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/placeholder_book_image" />
+
+            </androidx.cardview.widget.CardView>
 
             <TextView
                 android:id="@+id/postCreatedDate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
                 android:text="TextView"
                 android:textColor="@color/black"
                 android:layout_marginBottom="12dp"/>
@@ -106,15 +113,18 @@
                     android:layout_height="wrap_content"
                     android:text="Edit"
                     android:visibility="gone"
-                    android:layout_marginEnd="8dp"/> <!-- Add margin between buttons -->
+                    android:layout_marginEnd="8dp"
+                    style="@style/Widget.MaterialComponents.Button"/>
 
                 <Button
                     android:id="@+id/deleteButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
                     android:text="Delete"
-                    android:backgroundTint="@color/red"
-                    android:visibility="gone"/>
+                    android:textColor="@color/red"
+                    android:visibility="gone"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"/>
 
             </LinearLayout>
 
