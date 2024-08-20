@@ -1,4 +1,6 @@
 package com.example.bookworm.ui.books
+import android.util.Log
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 
 import androidx.lifecycle.ViewModel
@@ -11,6 +13,7 @@ import kotlinx.coroutines.launch
 class HandleBooksViewModel : ViewModel() {
     private val repository: BookRepositoryImpl = BookRepositoryImpl()
     private val auth: FirebaseAuth = FirebaseAuth.getInstance()
+    public val selectedBookRecommendation=MutableLiveData<BookRecommendation>();
 
     // Function to fetch all book recommendations
     suspend fun getBookRecommendations(): List<BookRecommendation> {
@@ -39,15 +42,17 @@ class HandleBooksViewModel : ViewModel() {
             }
         }
     }
-    fun editBookRecommendation(book: BookRecommendation) {
-        viewModelScope.launch {
-            try {
-                repository.editBookRecommendation(book)
-            } catch (e: Exception) {
-                // Handle error
-            }
+    suspend fun editBookRecommendation(bookRecommendation: BookRecommendation): Boolean {
+        return try {
+            // Update the book recommendation in the database
+            repository.editBookRecommendation(bookRecommendation)
+            true
+        } catch (e: Exception) {
+            Log.e("BookRepositoryImpl", "Error updating book recommendation", e)
+            false
         }
     }
+
     fun addBookRecommendation(book: BookRecommendation) {
         viewModelScope.launch {
             repository.addBookRecommendation(book)

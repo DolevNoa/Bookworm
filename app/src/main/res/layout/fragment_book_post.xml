@@ -70,7 +70,8 @@
                 android:layout_marginBottom="8dp"
                 android:numStars="5"
                 android:scaleType="fitCenter"
-                android:stepSize="1.0" />
+                android:stepSize="1.0"
+                android:isIndicator="true" />
 
             <androidx.cardview.widget.CardView
                 android:layout_width="160dp"
