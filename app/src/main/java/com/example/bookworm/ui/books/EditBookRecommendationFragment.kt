@@ -167,7 +167,19 @@ protected val viewModel: HandleBooksViewModel by activityViewModels()
             binding.bookNameInput.setText(selectedBook.bookName)
             binding.descriptionInput.setText(selectedBook.description)
             binding.ratingBar.rating = selectedBook.rating
-//            binding.imageViewBook.loadImage(selectedBook.imageUrl) // Ensure loadImage is implemented
+            val existingImageUrl = selectedBook.imageUrl
+            Log.d("imageUrl", "populateFields: $existingImageUrl")
+            if (existingImageUrl.isEmpty()) {
+                // Load default placeholder if no image URL exists
+                binding.imageViewBook.setImageResource(R.drawable.placeholder_book_image)
+            } else {
+                // Load existing image if URL exists
+                Glide.with(requireContext())
+                    .load(existingImageUrl)
+                    .placeholder(R.drawable.placeholder_book_image)
+                    .error(R.drawable.placeholder_book_image)
+                    .into(binding.imageViewBook)
+            }
         } else {
             Log.d("EditBookRecommendation", "No book recommendation to populate")
         }
@@ -183,7 +195,9 @@ protected val viewModel: HandleBooksViewModel by activityViewModels()
             return
         }
 
-        val updatedImageUrl = imageUrl ?: "" // Provide a default value if imageUrl is null
+        // Preserve the existing imageUrl if it was not changed
+        val updatedImageUrl = imageUrl ?: viewModel.selectedBookRecommendation.value?.imageUrl ?: ""
+        Log.d("imageUrl", "submitBookRecommendation: $updatedImageUrl")
 
         val book = viewModel.selectedBookRecommendation.value?.copy(
             bookName = bookName,
@@ -212,7 +226,6 @@ protected val viewModel: HandleBooksViewModel by activityViewModels()
             }
         }
     }
-
 
 
     private fun uploadImageToFirebaseStorage(uri: Uri, onComplete: (String?) -> Unit) {

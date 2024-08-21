@@ -19,6 +19,7 @@ import android.widget.RatingBar
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.example.bookworm.R
 import com.example.bookworm.databinding.FragmentAddBookRecommendationBinding
@@ -31,6 +32,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.squareup.picasso.Picasso
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -194,19 +196,21 @@ class AddBookRecommendationFragment : Fragment() {
             return
         }
 
-        val book = BookRecommendation(
-            creator = viewModel.getCurrentUserId() ?: "",
-            timestamp = Timestamp.now(),
-            bookName = bookName,
-            description = description,
-            rating = rating,
-            imageUrl = imageUrl ?: ""
-        )
+            val creator = viewModel.getCurrentUserId() ?: ""
+            val book = BookRecommendation(
+                creator = creator,
+                timestamp = Timestamp.now(),
+                bookName = bookName,
+                description = description,
+                rating = rating,
+                imageUrl = imageUrl ?: ""
+            )
 
-        viewModel.addBookRecommendation(book)
-        Toast.makeText(context, "Book recommendation added successfully", Toast.LENGTH_SHORT).show()
-        clearForm()
+            viewModel.addBookRecommendation(book)
+            Toast.makeText(context, "Book recommendation added successfully", Toast.LENGTH_SHORT).show()
+            clearForm()
     }
+
 
     private fun uploadImageToFirebaseStorage(uri: Uri, onComplete: (String?) -> Unit) {
         val fileRef = storageRef.child("book_images/${System.currentTimeMillis()}.jpg")

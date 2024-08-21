@@ -10,6 +10,7 @@ import com.bumptech.glide.Glide
 import com.example.bookworm.R
 import com.example.bookworm.data.books.BookRecommendation
 import android.widget.Button
+import androidx.core.content.ContentProviderCompat.requireContext
 
 class FeedAdapter(private var bookRecommendations: List<BookRecommendation>,
                   private val onEditClick: (BookRecommendation) -> Unit,
@@ -63,9 +64,10 @@ class FeedAdapter(private var bookRecommendations: List<BookRecommendation>,
             dateCreatedView.text = bookRecommendation.timestamp.toDate().toString()
             // Load image using Glide
             Glide.with(itemView.context)
-                .load(bookRecommendation.imageUrl) // URL or resource ID
-                .placeholder(R.drawable.placeholder_book_image) // Optional placeholder
+                .load(bookRecommendation.imageUrl)
+                .placeholder(R.drawable.placeholder_book_image)
+                .error(R.drawable.placeholder_book_image)
                 .into(imageView)
         }
+        }
     }
-}
