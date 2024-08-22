@@ -20,11 +20,7 @@
         android:src="@drawable/ic_back" />
 
     <androidx.cardview.widget.CardView
-        android:layout_width="160dp"
-        android:layout_height="160dp"
-        android:layout_marginTop="32dp"
-        app:cardCornerRadius="80dp"
-        app:cardElevation="4dp">
+        style="@style/ProfileCardViewStyle">
 
         <ImageView
             android:id="@+id/profileImage"

@@ -8,11 +8,7 @@
     tools:context=".ui.auth.LoginFragment">
 
     <androidx.cardview.widget.CardView
-        android:layout_width="160dp"
-        android:layout_height="160dp"
-        android:layout_marginTop="15dp"
-        app:cardCornerRadius="80dp"
-        app:cardElevation="4dp">
+        style="@style/ProfileCardViewStyle">
 
         <ImageView
             android:id="@+id/profileImage"
