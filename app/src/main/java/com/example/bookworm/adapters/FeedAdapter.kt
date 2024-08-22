@@ -11,8 +11,10 @@ import com.example.bookworm.R
 import com.example.bookworm.data.books.BookRecommendation
 import android.widget.Button
 import androidx.core.content.ContentProviderCompat.requireContext
+import com.example.bookworm.data.books.UserProfile
 
 class FeedAdapter(private var bookRecommendations: List<BookRecommendation>,
+                  private var userProfiles: Map<String, UserProfile>,
                   private val onEditClick: (BookRecommendation) -> Unit,
                   private val onDeleteClick: (BookRecommendation) -> Unit,
                   private val currentUserId: String) : RecyclerView.Adapter<FeedAdapter.BookPostViewHolder>() {
@@ -24,8 +26,8 @@ class FeedAdapter(private var bookRecommendations: List<BookRecommendation>,
 
     override fun onBindViewHolder(holder: BookPostViewHolder, position: Int) {
         val bookRecommendation = bookRecommendations[position]
-        holder.bind(bookRecommendation)
-        // Show or hide edit/delete buttons based on user ownership
+        holder.bind(bookRecommendation, userProfiles[bookRecommendation.creator]) // Pass user profile to bind method
+
         if (bookRecommendation.creator == currentUserId) {
             holder.editButton.visibility = View.VISIBLE
             holder.deleteButton.visibility = View.VISIBLE
@@ -41,9 +43,12 @@ class FeedAdapter(private var bookRecommendations: List<BookRecommendation>,
 
     override fun getItemCount(): Int = bookRecommendations.size
 
-    fun updateData(newBookRecommendations: List<BookRecommendation>) {
+
+    fun updateData(newBookRecommendations: List<BookRecommendation>, newUserProfiles: Map<String, UserProfile>) {
         bookRecommendations = newBookRecommendations
+        userProfiles = newUserProfiles
         notifyDataSetChanged()
+
     }
 
     class BookPostViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -53,21 +58,35 @@ class FeedAdapter(private var bookRecommendations: List<BookRecommendation>,
         private val imageView: ImageView = itemView.findViewById(R.id.postImage)
         private val dateCreatedView: TextView = itemView.findViewById(R.id.postCreatedDate)
         private val userNameView: TextView = itemView.findViewById(R.id.postUserName)
-        val editButton: Button = itemView.findViewById(R.id.editButton) // Correct ID
-        val deleteButton: Button = itemView.findViewById(R.id.deleteButton) // Correct ID
+        private val userImageView: ImageView = itemView.findViewById(R.id.postProfileImage) // New ImageView for user's profile pic
+        val editButton: Button = itemView.findViewById(R.id.editButton)
+        val deleteButton: Button = itemView.findViewById(R.id.deleteButton)
 
-        fun bind(bookRecommendation: BookRecommendation) {
+        fun bind(bookRecommendation: BookRecommendation, userProfile: UserProfile?) {
             titleView.text = bookRecommendation.bookName
-            userNameView.text = bookRecommendation.creator
             ratingView.rating = bookRecommendation.rating
             descView.text = bookRecommendation.description
             dateCreatedView.text = bookRecommendation.timestamp.toDate().toString()
-            // Load image using Glide
+
+            // Load book image using Glide
             Glide.with(itemView.context)
                 .load(bookRecommendation.imageUrl)
                 .placeholder(R.drawable.placeholder_book_image)
                 .error(R.drawable.placeholder_book_image)
                 .into(imageView)
+
+            // Set user's name and profile picture if available
+            if (userProfile != null) {
+                userNameView.text = userProfile.fullName
+                Glide.with(itemView.context)
+                    .load(userProfile.photoUrl)
+                    .placeholder(R.drawable.placeholder_user_image)
+                    .error(R.drawable.placeholder_user_image) // Display placeholder if image is missing
+                    .into(userImageView)
+            } else {
+                userNameView.text = bookRecommendation.creator // fallback to userId
+                userImageView.setImageResource(R.drawable.placeholder_book_image)
+            }
         }
-        }
+    }
     }

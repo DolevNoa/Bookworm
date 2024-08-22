@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.bookworm.R
 import com.example.bookworm.adapters.FeedAdapter
 import com.example.bookworm.data.books.BookRecommendation
+import com.example.bookworm.data.books.UserProfile
 import com.example.bookworm.ui.books.HandleBooksViewModel
 import com.example.bookworm.ui.feed.FeedFragment
 import com.example.bookworm.ui.mylist.MyListFragment
@@ -27,7 +28,6 @@ abstract class BaseBookListFragment : Fragment() {
 
     protected lateinit var recyclerView: RecyclerView
     protected lateinit var feedAdapter: FeedAdapter
-    //    protected val viewModel: HandleBooksViewModel by viewModels()
     protected lateinit var currentUserId: String
     protected val viewModel: HandleBooksViewModel by activityViewModels()
 
@@ -37,13 +37,14 @@ abstract class BaseBookListFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_book_list, container, false) // Use a common layout if needed
+        val view = inflater.inflate(R.layout.fragment_book_list, container, false)
 
         recyclerView = view.findViewById(R.id.recyclerView)
         recyclerView.layoutManager = LinearLayoutManager(context)
 
         feedAdapter = FeedAdapter(
             bookRecommendations = emptyList(),
+            userProfiles = emptyMap(),
             onEditClick = { bookRecommendation ->
                 viewModel.selectedBookRecommendation.value = bookRecommendation
                 val action = when (this) {
@@ -51,7 +52,6 @@ abstract class BaseBookListFragment : Fragment() {
                     is MyListFragment -> R.id.action_myListFragment_to_editBookRecommendationFragment
                     else -> throw IllegalArgumentException("Unknown Fragment")
                 }
-                // Navigate to the EditBookRecommendationFragment
                 findNavController().navigate(action)
             },
             onDeleteClick = { bookRecommendation ->
@@ -59,7 +59,7 @@ abstract class BaseBookListFragment : Fragment() {
                     val success = viewModel.deleteBookRecommendation(bookRecommendation)
                     if (success) {
                         Toast.makeText(context, "Book recommendation deleted successfully", Toast.LENGTH_SHORT).show()
-                        fetchBookRecommendations() // Refresh the list
+                        fetchBookRecommendations()
                     } else {
                         Toast.makeText(context, "Failed to delete book recommendation", Toast.LENGTH_SHORT).show()
                     }
@@ -72,24 +72,32 @@ abstract class BaseBookListFragment : Fragment() {
         return view
     }
 
-    protected fun updateAdapter(bookRecommendations: List<BookRecommendation>) {
-        feedAdapter.updateData(bookRecommendations)
+    protected fun updateAdapter(bookRecommendations: List<BookRecommendation>, userProfiles: Map<String, UserProfile>) {
+        feedAdapter.updateData(bookRecommendations, userProfiles)
     }
 
     protected fun fetchRecommendationsFromViewModel(fetchMethod: suspend () -> List<BookRecommendation>) {
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 val bookRecommendations = fetchMethod()
+                val userProfiles = fetchUserProfiles(bookRecommendations.map { it.creator }.distinct())
                 withContext(Dispatchers.Main) {
-                    // Log the fetched data
-                    Log.d("BaseBookListFragment", "Fetched book recommendations: $bookRecommendations")
-                    // Update the adapter with the fetched book recommendations
-                    updateAdapter(bookRecommendations)
+                    updateAdapter(bookRecommendations, userProfiles)
                 }
             } catch (e: Exception) {
-                // Handle exceptions (e.g., show error message)
                 Log.e("BaseBookListFragment", "Error fetching book recommendations", e)
             }
         }
+    }
+
+    private suspend fun fetchUserProfiles(userIds: List<String>): Map<String, UserProfile> {
+        val userProfiles = mutableMapOf<String, UserProfile>()
+        userIds.forEach { userId ->
+            val profile = viewModel.getUserProfile(userId)
+            if (profile != null) {
+                userProfiles[userId] = profile
+            }
+        }
+        return userProfiles
     }
 }

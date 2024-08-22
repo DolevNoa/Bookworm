@@ -96,7 +96,7 @@ class ProfileFragment : Fragment() {
                 Glide.with(this).load(photoUrl).into(binding.profileImage)
             } ?: run {
                 // Set default avatar if no photo URL is available
-                binding.profileImage.setImageResource(R.drawable.default_avatar)
+                binding.profileImage.setImageResource(R.drawable.placeholder_user_image)
             }
         }
     }

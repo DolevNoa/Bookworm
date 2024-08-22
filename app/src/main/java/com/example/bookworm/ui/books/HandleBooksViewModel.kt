@@ -5,6 +5,8 @@ import androidx.lifecycle.viewModelScope
 
 import androidx.lifecycle.ViewModel
 import com.example.bookworm.data.books.BookRecommendation
+import com.example.bookworm.data.books.UserProfile
+import com.example.bookworm.data.repositories.UserRepositoryImpl
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import com.google.firebase.auth.FirebaseAuth
@@ -12,8 +14,9 @@ import kotlinx.coroutines.launch
 
 class HandleBooksViewModel : ViewModel() {
     private val repository: BookRepositoryImpl = BookRepositoryImpl()
+    private val repositoryUser: UserRepositoryImpl = UserRepositoryImpl()
     private val auth: FirebaseAuth = FirebaseAuth.getInstance()
-    public val selectedBookRecommendation=MutableLiveData<BookRecommendation>();
+    public val selectedBookRecommendation = MutableLiveData<BookRecommendation>();
 
     // Function to fetch all book recommendations
     suspend fun getBookRecommendations(): List<BookRecommendation> {
@@ -31,6 +34,7 @@ class HandleBooksViewModel : ViewModel() {
         }
         return emptyList()
     }
+
     suspend fun deleteBookRecommendation(book: BookRecommendation): Boolean {
         return withContext(Dispatchers.IO) {
             try {
@@ -42,6 +46,7 @@ class HandleBooksViewModel : ViewModel() {
             }
         }
     }
+
     suspend fun editBookRecommendation(bookRecommendation: BookRecommendation): Boolean {
         return try {
             // Update the book recommendation in the database
@@ -58,7 +63,14 @@ class HandleBooksViewModel : ViewModel() {
             repository.addBookRecommendation(book)
         }
     }
+
     fun getCurrentUserId(): String? {
         return auth.currentUser?.uid
+    }
+
+    suspend fun getUserProfile(userId: String): UserProfile? {
+        return withContext(Dispatchers.IO) {
+            repositoryUser.getUserProfile(userId)
+        }
     }
 }

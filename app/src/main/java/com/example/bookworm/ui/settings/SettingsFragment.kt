@@ -76,11 +76,11 @@ class SettingsFragment : Fragment() {
             if (photoUrl != null) {
                 Glide.with(this)
                     .load(photoUrl)
-                    .placeholder(R.drawable.default_avatar)
-                    .error(R.drawable.default_avatar)
+                    .placeholder(R.drawable.placeholder_user_image)
+                    .error(R.drawable.placeholder_user_image)
                     .into(binding.profileImage)
             } else {
-                binding.profileImage.setImageResource(R.drawable.default_avatar)
+                binding.profileImage.setImageResource(R.drawable.placeholder_user_image)
             }
         }
     }
