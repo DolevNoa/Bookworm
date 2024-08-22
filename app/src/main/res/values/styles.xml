@@ -141,8 +141,8 @@
         <item name="android:paddingBottom">50dp</item>
     </style>
 
-    <!-- Dimensions Custom Style -->
-    <style name="DimensionsStyle">
+    <!-- Layout Custom Style -->
+    <style name="LayoutCustomStyle">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
         <item name="android:layout_margin">10dp</item>

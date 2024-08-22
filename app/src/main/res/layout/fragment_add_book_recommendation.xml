@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/scrollView"
-    style="@style/DimensionsStyle"
+    style="@style/LayoutCustomStyle"
     tools:context=".ui.books.AddBookRecommendationFragment">
 
     <androidx.cardview.widget.CardView

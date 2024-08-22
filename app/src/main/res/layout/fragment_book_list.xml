@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
-        style="@style/DimensionsStyle">
+        style="@style/LayoutCustomStyle">
 
         <!-- Horizontal LinearLayout to hold logo and title in one line -->
         <LinearLayout
