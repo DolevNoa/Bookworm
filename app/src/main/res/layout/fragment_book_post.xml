@@ -69,7 +69,8 @@
 
             <RatingBar
                 android:id="@+id/postRating"
-                style="@style/GeneralRatingBarStyle" />
+                style="@style/GeneralRatingBarStyle"
+                android:isIndicator="true"/>
 
             <TextView
                 android:id="@+id/postCreatedDate"
