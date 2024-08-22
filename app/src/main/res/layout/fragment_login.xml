@@ -2,8 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_marginStart="@dimen/fragment_horizontal_margin"
-    android:layout_marginEnd="@dimen/fragment_horizontal_margin"
     style="@style/DimensionsStyle"
     tools:context=".ui.auth.LoginFragment">
 
