@@ -2,26 +2,22 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_gravity="center"
-    android:layout_margin="20dp"
-    android:gravity="center_horizontal"
-    android:orientation="vertical"
-    android:padding="16dp"
+    style="@style/DimensionsStyle"
+    android:layout_marginStart="@dimen/fragment_horizontal_margin"
+    android:layout_marginEnd="@dimen/fragment_horizontal_margin"
     tools:context=".ui.userProfile.ProfileFragment">
 
     <!-- Return Button -->
     <ImageButton
         android:id="@+id/returnButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:layout_gravity="start"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:src="@drawable/ic_back"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:background="?attr/selectableItemBackground"
         android:contentDescription="@string/return_button"
-        android:background="?attr/selectableItemBackground" />
+        android:src="@drawable/ic_back" />
 
     <androidx.cardview.widget.CardView
         android:layout_width="160dp"
@@ -32,55 +28,42 @@
 
         <ImageView
             android:id="@+id/profileImage"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
+            style="@style/ProfileImage"
             android:clickable="true"
-            android:contentDescription="@string/profile_image"
-            android:scaleType="centerCrop"
-            android:src="@drawable/default_avatar" />
+            android:contentDescription="@string/profile_image" />
 
     </androidx.cardview.widget.CardView>
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="250dp"
-        android:layout_height="48dp"
+        style="@style/GeneralTextViewStyle"
         android:layout_marginTop="20dp"
-        android:padding="10dp"
         android:text="@string/full_name" />
 
     <EditText
         android:id="@+id/FullNameEditText"
-        android:layout_width="250dp"
-        android:layout_height="48dp"
+        style="@style/LetterStyle"
         android:layout_marginTop="0dp"
         android:hint="@string/full_name"
-        android:inputType="text"
-        android:padding="10dp" />
+        android:inputType="text" />
 
     <!-- Horizontal LinearLayout for buttons -->
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
         android:layout_gravity="end"
+        android:layout_marginTop="40dp"
         android:orientation="horizontal">
 
         <Button
             android:id="@+id/updateButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/SaveChanges"
-            style="@style/Widget.MaterialComponents.Button" />
+            style="@style/GeneralButtonStyle"
+            android:text="@string/SaveChanges" />
 
         <Button
             android:id="@+id/cancelButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/CancelButtonStyle"
             android:layout_marginStart="10dp"
-            android:textColor="@color/red"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:text="@string/cancel" />
 
     </LinearLayout>

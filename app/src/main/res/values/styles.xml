@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- General TextView Style -->
+    <style name="GeneralTextViewStyle">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_width">250dp</item>
+        <item name="android:layout_height">48dp</item>
+        <item name="android:layout_marginTop">8dp</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:paddingTop">10dp</item>
+        <item name="android:scaleType">fitCenter</item>
+        <item name="android:gravity">left</item>
+    </style>
+    <!-- General letters  Style -->
+    <style name="LetterStyle">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:layout_width">250dp</item>
+        <item name="android:layout_height">48dp</item>
+        <item name="android:layout_marginTop">8dp</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:paddingTop">10dp</item>
+        <item name="android:scaleType">fitCenter</item>
+        <item name="android:gravity">left</item>
+    </style>
+    <!-- General Title Style -->
+    <style name="GeneralTitleStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">50dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:paddingTop">10dp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/purple</item>
+        <item name="android:textSize">30sp</item>
+        <item name="android:layout_marginStart">8dp</item>
+    </style>
+    <!-- General CardView Style -->
+    <style name="GeneralCardViewStyle">
+        <item name="android:layout_margin">8dp</item>
+        <item name="cardCornerRadius">8dp</item>
+        <item name="cardElevation">4dp</item>
+        <item name="android:background">@color/soft_white</item>
+    </style>
+    <!-- General Button Style -->
+    <style name="GeneralButtonStyle" parent="Widget.MaterialComponents.Button">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">0dp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:backgroundTint">@color/indigo</item>
+    </style>
+    <!-- Cancel or logout Button Style -->
+    <style name="CancelButtonStyle" parent="Widget.MaterialComponents.Button">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">0dp</item>
+        <item name="android:textColor">@color/red</item>
+        <item name="android:backgroundTint">@color/soft_white</item>
+        <item name="android:layout_marginStart">10dp</item>
+    </style>
+    <!-- Already have Button Style -->
+    <style name="AlreadyHaveButtonStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:textColor">@color/darker_orange</item>
+        <item name="android:gravity">center</item>
+    </style>
+    <!-- Rating Style -->
+    <style name="GeneralRatingBarStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:layout_marginBottom">16dp</item>
+        <item name="android:numStars">5</item>
+        <item name="android:stepSize">1.0</item>
+        <item name="android:scaleType">fitCenter</item>
+        <item name="android:progressTint">@color/orange</item>
+        <item name="android:layout_marginTop">8dp</item>
+    </style>
+    <!-- Book Image Style -->
+    <style name="BookImage">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:scaleType">centerCrop</item>
+        <item name="android:src">@drawable/placeholder_book_image</item>
+    </style>
+    <!-- Profile Image Style -->
+    <style name="ProfileImage">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:contentDescription">@string/profile_image</item>
+        <item name="android:scaleType">centerCrop</item>
+        <item name="android:src">@drawable/default_avatar</item>
+    </style>
+    <!-- Recyclerview Image Style -->
+    <style name="RecyclerviewStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">0dp</item>
+        <item name="android:layout_marginStart">8dp</item>
+        <item name="android:layout_marginEnd">8dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:stepSize">1.0</item>
+        <item name="android:clipToPadding">false</item>
+        <item name="android:paddingBottom">50dp</item>
+    </style>
+    <!-- Dimensions Custom Style -->
+    <style name="DimensionsStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_margin">10dp</item>
+        <item name="android:padding">16dp</item>
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+</resources>

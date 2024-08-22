@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:layout_gravity="center"
-    android:layout_margin="20dp"
-    android:gravity="center_horizontal"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/DimensionsStyle"
+    android:layout_marginStart="@dimen/fragment_horizontal_margin"
+    android:layout_marginEnd="@dimen/fragment_horizontal_margin"
     tools:context=".ui.auth.RegisterFragment">
 
     <androidx.cardview.widget.CardView
@@ -19,95 +16,90 @@
 
         <ImageView
             android:id="@+id/profileImage"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
+            style="@style/ProfileImage"
             android:clickable="true"
             android:contentDescription="@string/profile_image"
-            android:scaleType="centerCrop"
             android:src="@mipmap/ic_launcher" />
 
     </androidx.cardview.widget.CardView>
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="250dp"
+        style="@style/GeneralTextViewStyle"
         android:layout_height="30dp"
-        android:layout_marginTop="15dp"
         android:padding="5dp"
         android:text="@string/full_name" />
 
     <EditText
         android:id="@+id/fullNameEditText"
-        android:layout_width="250dp"
-        android:layout_height="44dp"
-        android:layout_marginBottom="10dp"
+        style="@style/LetterStyle"
+        android:layout_marginTop="0dp"
+        android:layout_marginBottom="5dp"
         android:hint="@string/full_name"
         android:inputType="textEmailAddress" />
 
     <TextView
         android:id="@+id/textView1"
-        android:layout_width="250dp"
+        style="@style/GeneralTextViewStyle"
         android:layout_height="30dp"
         android:layout_marginTop="10dp"
+        android:padding="5dp"
         android:text="@string/email" />
 
     <EditText
         android:id="@+id/emailEditText"
-        android:layout_width="250dp"
-        android:layout_height="44dp"
+        style="@style/LetterStyle"
+        android:layout_marginTop="0dp"
         android:layout_marginBottom="10dp"
         android:hint="@string/email"
         android:inputType="textEmailAddress" />
 
     <TextView
         android:id="@+id/textView2"
-        android:layout_width="250dp"
+        style="@style/GeneralTextViewStyle"
         android:layout_height="30dp"
         android:layout_marginTop="10dp"
+        android:padding="5dp"
         android:text="@string/password" />
+
 
     <EditText
         android:id="@+id/passwordEditText"
-        android:layout_width="250dp"
-        android:layout_height="44dp"
+        style="@style/LetterStyle"
+        android:layout_marginTop="0dp"
         android:layout_marginBottom="10dp"
         android:hint="@string/password"
         android:inputType="textPassword" />
 
     <TextView
         android:id="@+id/textView3"
-        android:layout_width="250dp"
+        style="@style/GeneralTextViewStyle"
         android:layout_height="30dp"
         android:layout_marginTop="10dp"
+        android:padding="5dp"
         android:text="@string/confirm_password" />
 
     <EditText
         android:id="@+id/confirmPasswordEditText"
-        android:layout_width="250dp"
-        android:layout_height="44dp"
+        style="@style/LetterStyle"
+        android:layout_marginTop="0dp"
+        android:layout_marginBottom="10dp"
         android:hint="@string/confirm_password"
-        android:inputType="textPassword"
-        android:padding="10dp"
-        android:layout_marginBottom="10dp" />
+        android:inputType="textPassword" />
 
     <Button
         android:id="@+id/registerButton"
+        style="@style/GeneralButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:text="@string/register"
-        style="@style/Widget.MaterialComponents.Button"/>
+        android:text="@string/register" />
 
     <Button
         android:id="@+id/navigateToLoginButton"
-        android:layout_width="wrap_content"
-        android:layout_height="45dp"
-        android:layout_marginTop="10dp"
+        style="@style/AlreadyHaveButtonStyle"
         android:background="@android:color/transparent"
-        android:gravity="center"
-        android:text="@string/already_have_an_account_login"
-        android:textColor="@android:color/holo_blue_dark" />
+        android:text="@string/already_have_an_account_login" />
 
 
 </LinearLayout>
