@@ -3,11 +3,12 @@ package com.example.bookworm.data.repositories
 
 import android.util.Log
 import com.example.bookworm.data.books.UserProfile
+import com.example.bookworm.data.books.UserRepository
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.coroutines.tasks.await
 
-class UserRepository {
+class UserRepositoryImpl: UserRepository {
     private val firestore = FirebaseFirestore.getInstance()
     private val storage = FirebaseStorage.getInstance()
     private val usersCollection = firestore.collection("users")
@@ -33,21 +34,21 @@ class UserRepository {
             null
         }
     }
-    suspend fun getUserProfile(userId: String): UserProfile? {
+    override suspend fun getUserProfile(userId: String): UserProfile? {
         return try {
             val fullNameDeferred = getUserFullName(userId)
             val photoUrlDeferred = getUserProfilePhotoUrl(userId)
 
-            if (fullNameDeferred != null && photoUrlDeferred != null) {
-                Log.e("HandleBooksViewModel", "User not found for ID: $fullNameDeferred")
-                Log.e("HandleBooksViewModel", "User not found for ID: $photoUrlDeferred")
+            if (fullNameDeferred != null) {
+                Log.d("HandleBooksViewModel", "User found for ID: $fullNameDeferred")
+//                Log.d("HandleBooksViewModel", "User photo found for ID: $photoUrlDeferred")
                 UserProfile(
                     userId = userId,
                     fullName = fullNameDeferred,
-                    photoUrl = photoUrlDeferred
-                )
+                    photoUrl = photoUrlDeferred?: ""
+                    )
             } else {
-                Log.e("HandleBooksViewModel", "User not found for ID: $userId")
+                Log.e("HandleBooksViewModel", "User is not found for ID: $userId")
                 null
             }
         } catch (e: Exception) {
