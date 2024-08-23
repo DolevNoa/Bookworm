@@ -1,4 +1,5 @@
 package com.example.bookworm.adapters
+
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,21 +13,30 @@ import com.example.bookworm.data.books.BookRecommendation
 import android.widget.Button
 import androidx.core.content.ContentProviderCompat.requireContext
 import com.example.bookworm.data.books.UserProfile
+import com.google.firebase.Timestamp
+import java.text.SimpleDateFormat
+import java.util.Locale
 
-class FeedAdapter(private var bookRecommendations: List<BookRecommendation>,
-                  private var userProfiles: Map<String, UserProfile>,
-                  private val onEditClick: (BookRecommendation) -> Unit,
-                  private val onDeleteClick: (BookRecommendation) -> Unit,
-                  private val currentUserId: String) : RecyclerView.Adapter<FeedAdapter.BookPostViewHolder>() {
+class FeedAdapter(
+    private var bookRecommendations: List<BookRecommendation>,
+    private var userProfiles: Map<String, UserProfile>,
+    private val onEditClick: (BookRecommendation) -> Unit,
+    private val onDeleteClick: (BookRecommendation) -> Unit,
+    private val currentUserId: String,
+) : RecyclerView.Adapter<FeedAdapter.BookPostViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BookPostViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.fragment_book_post, parent, false)
+        val view =
+            LayoutInflater.from(parent.context).inflate(R.layout.fragment_book_post, parent, false)
         return BookPostViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: BookPostViewHolder, position: Int) {
         val bookRecommendation = bookRecommendations[position]
-        holder.bind(bookRecommendation, userProfiles[bookRecommendation.creator]) // Pass user profile to bind method
+        holder.bind(
+            bookRecommendation,
+            userProfiles[bookRecommendation.creator]
+        ) // Pass user profile to bind method
 
         if (bookRecommendation.creator == currentUserId) {
             holder.editButton.visibility = View.VISIBLE
@@ -44,7 +54,10 @@ class FeedAdapter(private var bookRecommendations: List<BookRecommendation>,
     override fun getItemCount(): Int = bookRecommendations.size
 
 
-    fun updateData(newBookRecommendations: List<BookRecommendation>, newUserProfiles: Map<String, UserProfile>) {
+    fun updateData(
+        newBookRecommendations: List<BookRecommendation>,
+        newUserProfiles: Map<String, UserProfile>,
+    ) {
         bookRecommendations = newBookRecommendations
         userProfiles = newUserProfiles
         notifyDataSetChanged()
@@ -58,7 +71,8 @@ class FeedAdapter(private var bookRecommendations: List<BookRecommendation>,
         private val imageView: ImageView = itemView.findViewById(R.id.postImage)
         private val dateCreatedView: TextView = itemView.findViewById(R.id.postCreatedDate)
         private val userNameView: TextView = itemView.findViewById(R.id.postUserName)
-        private val userImageView: ImageView = itemView.findViewById(R.id.postProfileImage) // New ImageView for user's profile pic
+        private val userImageView: ImageView =
+            itemView.findViewById(R.id.postProfileImage) // New ImageView for user's profile pic
         val editButton: Button = itemView.findViewById(R.id.editButton)
         val deleteButton: Button = itemView.findViewById(R.id.deleteButton)
 
@@ -66,7 +80,7 @@ class FeedAdapter(private var bookRecommendations: List<BookRecommendation>,
             titleView.text = bookRecommendation.bookName
             ratingView.rating = bookRecommendation.rating
             descView.text = bookRecommendation.description
-            dateCreatedView.text = bookRecommendation.timestamp.toDate().toString()
+            dateCreatedView.text = formatTimestamp(bookRecommendation.timestamp)
 
             // Load book image using Glide
             Glide.with(itemView.context)
@@ -88,5 +102,11 @@ class FeedAdapter(private var bookRecommendations: List<BookRecommendation>,
                 userImageView.setImageResource(R.drawable.placeholder_book_image)
             }
         }
-    }
-    }
+
+        // Function to format the Timestamp
+        private fun formatTimestamp(timestamp: Timestamp): String {
+            val date = timestamp.toDate()
+            val formatter = SimpleDateFormat("hh:mm a MMM dd yyyy", Locale.getDefault())
+            return formatter.format(date)
+        }    }
+}
