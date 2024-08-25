@@ -112,6 +112,7 @@ class ProfileFragment : Fragment() {
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
                         updateFirestoreUserProfile(firebaseUser.uid, newDisplayName)
+                        viewModel.updateFullName(newDisplayName) // Update the ViewModel
                     } else {
                         Toast.makeText(context, "Failed to update profile: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
                     }

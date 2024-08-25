@@ -55,7 +55,10 @@ class AuthViewModel : ViewModel() {
         _email.value = auth.currentUser?.email ?: ""
     }
 
-    // Optionally, you can directly use auth for fetching email
+    fun updateFullName(newFullName: String) {
+        _fullName.value = newFullName
+    }
+
     fun getUserEmail(): String {
         return auth.currentUser?.email ?: ""
     }
