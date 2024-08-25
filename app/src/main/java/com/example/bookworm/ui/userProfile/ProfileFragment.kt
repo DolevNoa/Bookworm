@@ -54,6 +54,11 @@ class ProfileFragment : Fragment() {
         // Populate fields with current user data
         populateUserData()
 
+        // Observe the fullName LiveData from the ViewModel
+        viewModel.fullName.observe(viewLifecycleOwner) { fullName ->
+            binding.FullNameEditText.setText(fullName)
+        }
+
         // Set up click listeners
         binding.profileImage.setOnClickListener {
             // Launch the image picker
