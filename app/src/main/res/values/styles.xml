@@ -151,4 +151,17 @@
         <item name="android:layout_gravity">center</item>
         <item name="android:orientation">vertical</item>
     </style>
+
+    <!-- Empty Book List Message Custom Style -->
+    <style name="EmptyBookListMessage">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">16dp</item>
+        <item name="android:layout_marginTop">16dp</item>
+        <item name="android:layout_marginBottom">16dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textAppearance">?attr/textAppearanceBody1</item>
+        <item name="android:background">@drawable/textview_frame</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
 </resources>

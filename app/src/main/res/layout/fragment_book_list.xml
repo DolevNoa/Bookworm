@@ -21,13 +21,9 @@
 
             <TextView
                 android:id="@+id/noRecommendationsText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="16dp"
                 android:visibility="gone"
                 android:text="@string/empty_recommendation_list_message"
-                android:textAppearance="?attr/textAppearanceBody1"
-                android:gravity="center"/>
+                style="@style/EmptyBookListMessage"/>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView"
