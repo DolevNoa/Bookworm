@@ -2,10 +2,8 @@ package com.example.bookworm.ui.userProfile
 
 import android.app.Activity
 import android.content.Intent
-import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
-import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -39,7 +37,7 @@ class ProfileFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentProfileBinding.inflate(inflater, container, false)
         return binding.root
@@ -165,7 +163,9 @@ class ProfileFragment : Fragment() {
     }
 
     private fun openImageChooser() {
-        val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
+        intent.setType("image/*") // You can change this to other types like "video/*" or "audio/*" based on your need
+        intent.addCategory(Intent.CATEGORY_OPENABLE)
         startActivityForResult(intent, PICK_IMAGE_REQUEST)
     }
 
