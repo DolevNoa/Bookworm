@@ -45,9 +45,7 @@
     <string name="return_button">go back</string>
     <string name="rateBooklable">Click to rate:</string>
     <string name="my_list_title">My book posts:</string>
-
-
-
+    <string name="empty_recommendation_list_message">Your book list is empty. Start building your recommendations by adding your first book through the \'Add Book\' feature.</string>
 
 
 </resources>

@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
+import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -31,6 +32,7 @@ abstract class BaseBookListFragment : Fragment() {
     protected lateinit var feedAdapter: FeedAdapter
     protected lateinit var currentUserId: String
     protected lateinit var progressBar: ProgressBar
+    protected lateinit var noRecommendationsText: TextView
     protected val viewModel: HandleBooksViewModel by activityViewModels()
 
     abstract fun fetchBookRecommendations()
@@ -41,6 +43,7 @@ abstract class BaseBookListFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_book_list, container, false)
         progressBar = view.findViewById(R.id.paginationProgressBar)
+        noRecommendationsText = view.findViewById(R.id.noRecommendationsText)
         recyclerView = view.findViewById(R.id.recyclerView)
         recyclerView.layoutManager = LinearLayoutManager(context)
 
@@ -77,6 +80,16 @@ abstract class BaseBookListFragment : Fragment() {
     protected fun updateAdapter(bookRecommendations: List<BookRecommendation>, userProfiles: Map<String, UserProfile>) {
         feedAdapter.updateData(bookRecommendations, userProfiles)
         progressBar.visibility = View.GONE
+
+        if (bookRecommendations.isEmpty()) {
+            noRecommendationsText.visibility = View.VISIBLE
+            recyclerView.visibility = View.GONE
+            Log.d("BaseBookListFragment", "No recommendations found. Showing noRecommendationsText.")
+        } else {
+            noRecommendationsText.visibility = View.GONE
+            recyclerView.visibility = View.VISIBLE
+            Log.d("BaseBookListFragment", "Recommendations found. Hiding noRecommendationsText.")
+        }
     }
 
     protected fun fetchRecommendationsFromViewModel(fetchMethod: suspend () -> List<BookRecommendation>) {
