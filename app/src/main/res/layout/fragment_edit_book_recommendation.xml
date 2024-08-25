@@ -1,77 +1,88 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/scrollView"
-    style="@style/LayoutCustomStyle">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
 
-    <androidx.cardview.widget.CardView
-        style="@style/BookCardViewStyle">
-
-        <ImageView
-            android:id="@+id/imageViewBook"
-            android:clickable="true"
-            android:contentDescription="@string/book_image_content_desc"
-            style="@style/BookImage" />
-
-    </androidx.cardview.widget.CardView>
-
-    <TextView
-        android:id="@+id/bookNameLabel"
-        android:text="@string/book_name_label"
-        style="@style/GeneralTextViewStyle" />
-
-    <AutoCompleteTextView
-        android:id="@+id/bookNameInput"
-        android:layout_width="250dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="0dp"
-        android:layout_marginBottom="8dp"
-        android:autofillHints="bookName"
-        android:hint="@string/book_name_edit_text_hint"
-        android:inputType="text"
-        style="@style/GeneralTextViewStyle"/>
-
-    <TextView
-        android:id="@+id/descriptionLabel"
-        android:text="@string/recommendation_label"
-        style="@style/GeneralTextViewStyle"/>
-
-
-    <EditText
-        android:id="@+id/descriptionInput"
-        android:layout_width="250dp"
-        android:layout_height="130dp"
-        android:layout_marginTop="0dp"
-        android:layout_marginBottom="8dp"
-        android:autofillHints="bookDescription"
-        android:hint="@string/recommendation_edit_text_hint"
-        android:inputType="textMultiLine"
-        android:padding="8dp" />
-
-    <RatingBar
-        android:id="@+id/ratingBar"
-        style="@style/GeneralRatingBarStyle"/>
-
-    <LinearLayout
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/scrollView"
+        style="@style/LayoutCustomStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="end"
-        android:layout_marginTop="5dp">
+        android:orientation="vertical">
 
-        <Button
-            android:id="@+id/buttonSubmitBook"
-            android:text="Update Recommendation"
-            style="@style/GeneralButtonStyle"/>
+        <androidx.cardview.widget.CardView style="@style/BookCardViewStyle">
 
-        <Button
-            android:id="@+id/buttonCancel"
-            android:text="Cancel"
-            style="@style/CancelButtonStyle"/>
+            <ImageView
+                android:id="@+id/imageViewBook"
+                style="@style/BookImage"
+                android:clickable="true"
+                android:contentDescription="@string/book_image_content_desc" />
+
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:id="@+id/bookNameLabel"
+            style="@style/GeneralTextViewStyle"
+            android:text="@string/book_name_label" />
+
+        <AutoCompleteTextView
+            android:id="@+id/bookNameInput"
+            style="@style/GeneralTextViewStyle"
+            android:layout_width="250dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginBottom="8dp"
+            android:autofillHints="bookName"
+            android:hint="@string/book_name_edit_text_hint"
+            android:inputType="text" />
+
+        <TextView
+            android:id="@+id/descriptionLabel"
+            style="@style/GeneralTextViewStyle"
+            android:text="@string/recommendation_label" />
+
+
+        <EditText
+            android:id="@+id/descriptionInput"
+            android:layout_width="250dp"
+            android:layout_height="130dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginBottom="8dp"
+            android:autofillHints="bookDescription"
+            android:hint="@string/recommendation_edit_text_hint"
+            android:inputType="textMultiLine"
+            android:padding="8dp" />
+
+        <RatingBar
+            android:id="@+id/ratingBar"
+            style="@style/GeneralRatingBarStyle" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:gravity="end"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/buttonSubmitBook"
+                style="@style/GeneralButtonStyle"
+                android:text="Update Recommendation" />
+
+            <Button
+                android:id="@+id/buttonCancel"
+                style="@style/CancelButtonStyle"
+                android:text="Cancel" />
+        </LinearLayout>
+
+        <ProgressBar
+            android:id="@+id/uploadProgress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
+
     </LinearLayout>
-
-    <ProgressBar
-        android:id="@+id/uploadProgress"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone" />
-</LinearLayout>
+</ScrollView>

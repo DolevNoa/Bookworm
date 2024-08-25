@@ -1,58 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    style="@style/LayoutCustomStyle"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     tools:context=".ui.auth.LoginFragment">
 
-    <androidx.cardview.widget.CardView
-        style="@style/ProfileCardViewStyle">
+    <LinearLayout
+        style="@style/LayoutCustomStyle"
+        android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/profileImage"
-            style="@style/ProfileImage"
-            android:clickable="true"
-            android:contentDescription="@string/profile_image"
-            android:src="@mipmap/ic_launcher" />
+        <androidx.cardview.widget.CardView style="@style/ProfileCardViewStyle">
 
-    </androidx.cardview.widget.CardView>
+            <ImageView
+                android:id="@+id/profileImage"
+                style="@style/ProfileImage"
+                android:clickable="true"
+                android:contentDescription="@string/profile_image"
+                android:src="@mipmap/ic_launcher" />
 
-    <TextView
-        android:id="@+id/textView1"
-        style="@style/GeneralTextViewStyle"
-        android:layout_marginTop="10dp"
-        android:text="@string/email" />
+        </androidx.cardview.widget.CardView>
 
-    <EditText
-        android:id="@+id/emailEditText"
-        style="@style/LetterStyle"
-        android:layout_marginTop="0dp"
-        android:hint="@string/email"
-        android:inputType="textEmailAddress" />
+        <TextView
+            android:id="@+id/textView1"
+            style="@style/GeneralTextViewStyle"
+            android:layout_marginTop="10dp"
+            android:text="@string/email" />
+
+        <EditText
+            android:id="@+id/emailEditText"
+            style="@style/LetterStyle"
+            android:layout_marginTop="0dp"
+            android:hint="@string/email"
+            android:inputType="textEmailAddress" />
 
 
-    <TextView
-        android:id="@+id/textView2"
-        style="@style/GeneralTextViewStyle"
-        android:layout_marginTop="15dp"
-        android:text="@string/password" />
+        <TextView
+            android:id="@+id/textView2"
+            style="@style/GeneralTextViewStyle"
+            android:layout_marginTop="15dp"
+            android:text="@string/password" />
 
-    <EditText
-        android:id="@+id/passwordEditText"
-        style="@style/LetterStyle"
-        android:layout_marginTop="0dp"
-        android:hint="@string/enter_your_password"
-        android:inputType="textPassword" />
+        <EditText
+            android:id="@+id/passwordEditText"
+            style="@style/LetterStyle"
+            android:layout_marginTop="0dp"
+            android:hint="@string/enter_your_password"
+            android:inputType="textPassword" />
 
-    <Button
-        android:id="@+id/loginButton"
-        style="@style/GeneralButtonStyle"
-        android:layout_marginTop="15dp"
-        android:text="@string/login" />
+        <Button
+            android:id="@+id/loginButton"
+            style="@style/GeneralButtonStyle"
+            android:layout_marginTop="15dp"
+            android:text="@string/login" />
 
-    <Button
-        android:id="@+id/navigateToRegisterButton"
-        style="@style/AlreadyHaveButtonStyle"
-        android:background="@android:color/transparent"
-        android:text="@string/don_t_have_an_account_register" />
-</LinearLayout>
+        <Button
+            android:id="@+id/navigateToRegisterButton"
+            style="@style/AlreadyHaveButtonStyle"
+            android:background="@android:color/transparent"
+            android:text="@string/don_t_have_an_account_register" />
+    </LinearLayout>
+</ScrollView>
+
