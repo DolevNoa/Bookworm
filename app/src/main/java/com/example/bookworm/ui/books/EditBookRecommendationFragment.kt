@@ -130,7 +130,9 @@ protected val viewModel: HandleBooksViewModel by activityViewModels()
                 }
             }
             override fun onFailure(call: Call<BookResponse>, t: Throwable) {
-                // Handle error
+                // Log the error for debugging purposes and Toast a message to the user
+                Log.e("BookSearch", "Error fetching books: ${t.message}")
+                Toast.makeText(context, "Failed to load book suggestions. Please check your internet connection.", Toast.LENGTH_SHORT).show()
             }
         })
     }

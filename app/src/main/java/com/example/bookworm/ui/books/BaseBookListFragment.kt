@@ -93,10 +93,16 @@ abstract class BaseBookListFragment : Fragment() {
 
     protected fun fetchRecommendationsFromViewModel(fetchMethod: suspend () -> List<BookRecommendation>) {
         CoroutineScope(Dispatchers.IO).launch {
-            progressBar.visibility = View.VISIBLE
             try {
+                // Switch to Main thread before making UI updates
+                withContext(Dispatchers.Main) {
+                    progressBar.visibility = View.VISIBLE
+                }
+
                 val bookRecommendations = fetchMethod()
                 val userProfiles = fetchUserProfiles(bookRecommendations.map { it.creator }.distinct())
+
+                // Switch to Main thread before making UI updates
                 withContext(Dispatchers.Main) {
                     updateAdapter(bookRecommendations, userProfiles)
                 }
@@ -105,6 +111,7 @@ abstract class BaseBookListFragment : Fragment() {
             }
         }
     }
+
 
     private suspend fun fetchUserProfiles(userIds: List<String>): Map<String, UserProfile> {
         val userProfiles = mutableMapOf<String, UserProfile>()

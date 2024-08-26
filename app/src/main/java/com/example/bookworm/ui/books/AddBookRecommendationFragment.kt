@@ -95,18 +95,6 @@ class AddBookRecommendationFragment : Fragment() {
         setupListeners()
         storage = FirebaseStorage.getInstance()
         storageRef = storage.reference
-
-        // Adjust layout when keyboard is visible
-        view.viewTreeObserver.addOnGlobalLayoutListener {
-            val rect = android.graphics.Rect()
-            view.getWindowVisibleDisplayFrame(rect)
-            val screenHeight = view.height
-            val keypadHeight = screenHeight - rect.bottom
-            if (keypadHeight > screenHeight * 0.15) {
-                // Keyboard is visible
-                // Adjust layout or scroll if necessary
-            }
-        }
     }
 
     private fun initializeViews() {
@@ -164,7 +152,9 @@ class AddBookRecommendationFragment : Fragment() {
             }
 
             override fun onFailure(call: Call<BookResponse>, t: Throwable) {
-                // Handle error
+                // Log the error for debugging purposes and Toast a message to the user
+                Log.e("BookSearch", "Error fetching books: ${t.message}")
+                Toast.makeText(context, "Failed to load book suggestions. Please check your internet connection.", Toast.LENGTH_SHORT).show()
             }
         })
     }

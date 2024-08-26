@@ -170,7 +170,7 @@ class ProfileFragment : Fragment() {
 
     private fun openImageChooser() {
         val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
-        intent.setType("image/*") // You can change this to other types like "video/*" or "audio/*" based on your need
+        intent.setType("image/*")
         intent.addCategory(Intent.CATEGORY_OPENABLE)
         startActivityForResult(intent, PICK_IMAGE_REQUEST)
     }

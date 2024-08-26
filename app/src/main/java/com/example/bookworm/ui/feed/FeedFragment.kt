@@ -26,7 +26,6 @@ class FeedFragment : BaseBookListFragment() {
         // Inflate the common layout
         val view = inflater.inflate(R.layout.fragment_book_list, container, false)
         return super.onCreateView(inflater, container, savedInstanceState)?.apply {
-            // Optionally perform additional view setup here
         }
     }
 }
