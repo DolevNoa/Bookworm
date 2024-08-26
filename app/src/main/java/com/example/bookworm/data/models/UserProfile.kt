@@ -1,4 +1,4 @@
-package com.example.bookworm.data.books
+package com.example.bookworm.data.models
 
 data class UserProfile(
     val userId: String,

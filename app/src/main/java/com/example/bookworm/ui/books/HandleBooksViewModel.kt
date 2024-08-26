@@ -4,8 +4,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 
 import androidx.lifecycle.ViewModel
-import com.example.bookworm.data.books.BookRecommendation
-import com.example.bookworm.data.books.UserProfile
+import com.example.bookworm.data.models.BookRecommendation
+import com.example.bookworm.data.models.UserProfile
+import com.example.bookworm.data.repositories.BookRepositoryImpl
 import com.example.bookworm.data.repositories.UserRepositoryImpl
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -41,7 +42,7 @@ class HandleBooksViewModel : ViewModel() {
                 repository.deleteBookRecommendation(book)
                 true
             } catch (e: Exception) {
-                // Handle error (e.g., log it)
+                Log.e("HandleBooksViewModel", "Error adding book recommendation", e)
                 false
             }
         }

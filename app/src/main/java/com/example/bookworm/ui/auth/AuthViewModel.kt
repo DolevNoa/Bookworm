@@ -84,9 +84,3 @@ class AuthViewModel : ViewModel() {
         fun peekContent(): T = content
     }
 }
-
-//    fun getBooksByCurrentUser() = viewModelScope.launch {
-//        currUser.value?.uid?.let { userId ->
-//            repository.getBooksByUser(userId)
-//        }
-//    }

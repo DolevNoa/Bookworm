@@ -10,25 +10,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import android.widget.AutoCompleteTextView
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.ProgressBar
-import android.widget.RatingBar
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.example.bookworm.R
 import com.example.bookworm.databinding.FragmentEditBookRecommendationBinding
-import com.example.bookworm.data.books.BookRecommendation
-import com.example.bookworm.services.bookApi.BookApiService
-import com.example.bookworm.services.bookApi.BookItem
-import com.example.bookworm.services.bookApi.BookResponse
-import com.google.firebase.Timestamp
+import com.example.bookworm.networking.BookApiService
+import com.example.bookworm.networking.BookItem
+import com.example.bookworm.networking.BookResponse
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
@@ -46,7 +37,6 @@ class EditBookRecommendationFragment : Fragment() {
 
     private var _binding: FragmentEditBookRecommendationBinding? = null
     private val binding get() = _binding!!
-//    protected val viewModel: HandleBooksViewModel by viewModels()
 protected val viewModel: HandleBooksViewModel by activityViewModels()
 
     private lateinit var auth: FirebaseAuth

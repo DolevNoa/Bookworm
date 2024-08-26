@@ -119,7 +119,6 @@ class RegisterFragment : Fragment() {
                 findNavController().navigate(R.id.action_registerFragment_to_feedFragment)
             }
             .addOnFailureListener { e ->
-                // Handle error
                 Toast.makeText(context, "Failed to save profile: ${e.message}", Toast.LENGTH_SHORT).show()
             }
     }

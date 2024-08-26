@@ -2,13 +2,12 @@
 package com.example.bookworm.data.repositories
 
 import android.util.Log
-import com.example.bookworm.data.books.UserProfile
-import com.example.bookworm.data.books.UserRepository
+import com.example.bookworm.data.models.UserProfile
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.coroutines.tasks.await
 
-class UserRepositoryImpl: UserRepository {
+class UserRepositoryImpl: UserRepositoryInterface {
     private val firestore = FirebaseFirestore.getInstance()
     private val storage = FirebaseStorage.getInstance()
     private val usersCollection = firestore.collection("users")
@@ -41,7 +40,6 @@ class UserRepositoryImpl: UserRepository {
 
             if (fullNameDeferred != null) {
                 Log.d("HandleBooksViewModel", "User found for ID: $fullNameDeferred")
-//                Log.d("HandleBooksViewModel", "User photo found for ID: $photoUrlDeferred")
                 UserProfile(
                     userId = userId,
                     fullName = fullNameDeferred,

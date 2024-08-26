@@ -1,4 +1,4 @@
-package com.example.bookworm.services.bookApi
+package com.example.bookworm.networking
 
 data class BookResponse(
     val items: List<BookItem>

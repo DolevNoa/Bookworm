@@ -10,14 +10,13 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.bookworm.R
-import com.example.bookworm.adapters.FeedAdapter
-import com.example.bookworm.data.books.BookRecommendation
-import com.example.bookworm.data.books.UserProfile
+import com.example.bookworm.adapters.ListAdapter
+import com.example.bookworm.data.models.BookRecommendation
+import com.example.bookworm.data.models.UserProfile
 import com.example.bookworm.ui.books.HandleBooksViewModel
 import com.example.bookworm.ui.feed.FeedFragment
 import com.example.bookworm.ui.mylist.MyListFragment
@@ -29,7 +28,7 @@ import kotlinx.coroutines.withContext
 abstract class BaseBookListFragment : Fragment() {
 
     protected lateinit var recyclerView: RecyclerView
-    protected lateinit var feedAdapter: FeedAdapter
+    protected lateinit var feedAdapter: ListAdapter
     protected lateinit var currentUserId: String
     protected lateinit var progressBar: ProgressBar
     protected lateinit var noRecommendationsText: TextView
@@ -47,7 +46,7 @@ abstract class BaseBookListFragment : Fragment() {
         recyclerView = view.findViewById(R.id.recyclerView)
         recyclerView.layoutManager = LinearLayoutManager(context)
 
-        feedAdapter = FeedAdapter(
+        feedAdapter = ListAdapter(
             bookRecommendations = emptyList(),
             userProfiles = emptyMap(),
             onEditClick = { bookRecommendation ->

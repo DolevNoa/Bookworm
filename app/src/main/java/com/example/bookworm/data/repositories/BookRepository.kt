@@ -1,14 +1,11 @@
-package com.example.bookworm.ui.books
+package com.example.bookworm.data.repositories
 
 import android.util.Log
-import com.example.bookworm.data.books.BookRecommendation
-import com.example.bookworm.data.books.BookRepository
-import com.google.android.gms.tasks.Task
-import com.google.firebase.firestore.DocumentReference
+import com.example.bookworm.data.models.BookRecommendation
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.tasks.await
 
-class BookRepositoryImpl : BookRepository {
+class BookRepositoryImpl : BookRepositoryInterface {
     private val firestore: FirebaseFirestore = FirebaseFirestore.getInstance()
     private val collectionRef = firestore.collection("bookRecommendation")
 
@@ -35,6 +32,7 @@ class BookRepositoryImpl : BookRepository {
             }
 
             Log.d("BookRepositoryImpl", "Book recommendation deleted successfully.")
+
         } catch (e: Exception) {
             Log.e("BookRepositoryImpl", "Error deleting book recommendation: ${e.message}")
             throw e

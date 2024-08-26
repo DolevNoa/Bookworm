@@ -9,21 +9,20 @@ import androidx.appcompat.widget.AppCompatRatingBar
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.bookworm.R
-import com.example.bookworm.data.books.BookRecommendation
+import com.example.bookworm.data.models.BookRecommendation
 import android.widget.Button
-import androidx.core.content.ContentProviderCompat.requireContext
-import com.example.bookworm.data.books.UserProfile
+import com.example.bookworm.data.models.UserProfile
 import com.google.firebase.Timestamp
 import java.text.SimpleDateFormat
 import java.util.Locale
 
-class FeedAdapter(
+class ListAdapter(
     private var bookRecommendations: List<BookRecommendation>,
     private var userProfiles: Map<String, UserProfile>,
     private val onEditClick: (BookRecommendation) -> Unit,
     private val onDeleteClick: (BookRecommendation) -> Unit,
     private val currentUserId: String,
-) : RecyclerView.Adapter<FeedAdapter.BookPostViewHolder>() {
+) : RecyclerView.Adapter<ListAdapter.BookPostViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BookPostViewHolder {
         val view =
@@ -71,8 +70,7 @@ class FeedAdapter(
         private val imageView: ImageView = itemView.findViewById(R.id.postImage)
         private val dateCreatedView: TextView = itemView.findViewById(R.id.postCreatedDate)
         private val userNameView: TextView = itemView.findViewById(R.id.postUserName)
-        private val userImageView: ImageView =
-            itemView.findViewById(R.id.postProfileImage) // New ImageView for user's profile pic
+        private val userImageView: ImageView = itemView.findViewById(R.id.postProfileImage)
         val editButton: Button = itemView.findViewById(R.id.editButton)
         val deleteButton: Button = itemView.findViewById(R.id.deleteButton)
 
@@ -99,7 +97,7 @@ class FeedAdapter(
                     .into(userImageView)
             } else {
                 userNameView.text = bookRecommendation.creator // fallback to userId
-                userImageView.setImageResource(R.drawable.placeholder_book_image)
+                userImageView.setImageResource(R.drawable.placeholder_user_image)
             }
         }
 

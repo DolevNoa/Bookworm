@@ -1,4 +1,4 @@
-package com.example.bookworm.services.bookApi
+package com.example.bookworm.networking
 
 import retrofit2.Call
 import retrofit2.http.GET
