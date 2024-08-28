@@ -192,10 +192,14 @@ class AddBookRecommendationFragment : Fragment() {
                 rating = rating,
                 imageUrl = imageUrl ?: ""
             )
-
-            viewModel.addBookRecommendation(book)
-            Toast.makeText(context, "Book recommendation added successfully", Toast.LENGTH_SHORT).show()
-            clearForm()
+        viewModel.addBookRecommendation(book) { success ->
+            if (success) {
+                Toast.makeText(context, "Book recommendation added successfully", Toast.LENGTH_SHORT).show()
+                clearForm()
+            } else {
+                Toast.makeText(context, "Failed to add book recommendation", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
 

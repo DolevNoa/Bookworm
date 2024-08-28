@@ -59,11 +59,18 @@ class HandleBooksViewModel : ViewModel() {
         }
     }
 
-    fun addBookRecommendation(book: BookRecommendation) {
+    fun addBookRecommendation(book: BookRecommendation, onComplete: (Boolean) -> Unit) {
         viewModelScope.launch {
-            repository.addBookRecommendation(book)
+            try {
+                repository.addBookRecommendation(book)
+                onComplete(true)
+            } catch (e: Exception) {
+                Log.e("HandleBooksViewModel", "Error adding book recommendation: ${e.message}")
+                onComplete(false)
+            }
         }
     }
+
 
     fun getCurrentUserId(): String? {
         return auth.currentUser?.uid
