@@ -9,17 +9,10 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import com.example.bookworm.MainActivity
 import com.example.bookworm.R
 import com.google.firebase.auth.FirebaseAuth
 
 class LoginFragment : Fragment() {
-    companion object {
-        fun newInstance(): LoginFragment {
-            return LoginFragment()
-        }
-    }
-
     private lateinit var auth: FirebaseAuth
     private lateinit var emailEditText: EditText
     private lateinit var passwordEditText: EditText

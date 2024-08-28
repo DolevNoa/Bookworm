@@ -37,7 +37,7 @@ class EditBookRecommendationFragment : Fragment() {
 
     private var _binding: FragmentEditBookRecommendationBinding? = null
     private val binding get() = _binding!!
-protected val viewModel: HandleBooksViewModel by activityViewModels()
+    private val viewModel: HandleBooksViewModel by activityViewModels()
 
     private lateinit var auth: FirebaseAuth
     private lateinit var bookApiService: BookApiService
@@ -142,7 +142,7 @@ protected val viewModel: HandleBooksViewModel by activityViewModels()
 
         val thumbnailUrl = book.volumeInfo.imageLinks?.thumbnail?.replace("http://", "https://")
 
-        Log.d("BookThumbnail", "Thumbnail URL: ${thumbnailUrl}")
+        Log.d("BookThumbnail", "Thumbnail URL: $thumbnailUrl")
 
         Glide.with(requireContext())
             .load(thumbnailUrl)
@@ -237,9 +237,5 @@ protected val viewModel: HandleBooksViewModel by activityViewModels()
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-    companion object {
-        fun newInstance() = EditBookRecommendationFragment()
     }
 }

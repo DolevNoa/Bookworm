@@ -16,12 +16,6 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
 class RegisterFragment : Fragment() {
-    companion object {
-        fun newInstance(): RegisterFragment {
-            return RegisterFragment()
-        }
-    }
-
     private lateinit var auth: FirebaseAuth
     private lateinit var firestore: FirebaseFirestore
 

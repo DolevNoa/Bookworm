@@ -17,7 +17,7 @@ class HandleBooksViewModel : ViewModel() {
     private val repository: BookRepositoryImpl = BookRepositoryImpl()
     private val repositoryUser: UserRepositoryImpl = UserRepositoryImpl()
     private val auth: FirebaseAuth = FirebaseAuth.getInstance()
-    public val selectedBookRecommendation = MutableLiveData<BookRecommendation>();
+    val selectedBookRecommendation = MutableLiveData<BookRecommendation>()
 
     // Function to fetch all book recommendations
     suspend fun getBookRecommendations(): List<BookRecommendation> {

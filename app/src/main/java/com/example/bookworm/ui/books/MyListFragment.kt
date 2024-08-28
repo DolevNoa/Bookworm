@@ -1,11 +1,9 @@
-package com.example.bookworm.ui.mylist
+package com.example.bookworm.ui.books
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.bookworm.R
-import com.example.bookworm.ui.common.BaseBookListFragment
 
 class MyListFragment : BaseBookListFragment() {
 
@@ -24,7 +22,6 @@ class MyListFragment : BaseBookListFragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the common layout
-        val view = inflater.inflate(R.layout.fragment_book_list, container, false)
         return super.onCreateView(inflater, container, savedInstanceState)?.apply {
         }
     }

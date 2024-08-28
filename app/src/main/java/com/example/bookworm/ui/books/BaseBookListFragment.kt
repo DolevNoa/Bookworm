@@ -1,4 +1,4 @@
-package com.example.bookworm.ui.common
+package com.example.bookworm.ui.books
 
 import android.os.Bundle
 import android.util.Log
@@ -17,9 +17,7 @@ import com.example.bookworm.R
 import com.example.bookworm.adapters.ListAdapter
 import com.example.bookworm.data.models.BookRecommendation
 import com.example.bookworm.data.models.UserProfile
-import com.example.bookworm.ui.books.HandleBooksViewModel
 import com.example.bookworm.ui.feed.FeedFragment
-import com.example.bookworm.ui.mylist.MyListFragment
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -27,11 +25,11 @@ import kotlinx.coroutines.withContext
 
 abstract class BaseBookListFragment : Fragment() {
 
-    protected lateinit var recyclerView: RecyclerView
-    protected lateinit var feedAdapter: ListAdapter
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var feedAdapter: ListAdapter
     protected lateinit var currentUserId: String
-    protected lateinit var progressBar: ProgressBar
-    protected lateinit var noRecommendationsText: TextView
+    private lateinit var progressBar: ProgressBar
+    private lateinit var noRecommendationsText: TextView
     protected val viewModel: HandleBooksViewModel by activityViewModels()
 
     abstract fun fetchBookRecommendations()
@@ -76,41 +74,51 @@ abstract class BaseBookListFragment : Fragment() {
         return view
     }
 
-    protected fun updateAdapter(bookRecommendations: List<BookRecommendation>, userProfiles: Map<String, UserProfile>) {
-        feedAdapter.updateData(bookRecommendations, userProfiles)
-        progressBar.visibility = View.GONE
+    private fun updateAdapter(bookRecommendations: List<BookRecommendation>, userProfiles: Map<String, UserProfile>) {
+        CoroutineScope(Dispatchers.Main).launch {
+            feedAdapter.updateData(bookRecommendations, userProfiles)
+            progressBar.visibility = View.GONE
 
-        if (bookRecommendations.isEmpty()) {
-            noRecommendationsText.visibility = View.VISIBLE
-            recyclerView.visibility = View.GONE
-            Log.d("BaseBookListFragment", "No recommendations found. Showing noRecommendationsText.")
-        } else {
-            noRecommendationsText.visibility = View.GONE
-            recyclerView.visibility = View.VISIBLE
-            Log.d("BaseBookListFragment", "Recommendations found. Hiding noRecommendationsText.")
+            if (bookRecommendations.isEmpty()) {
+                noRecommendationsText.visibility = View.VISIBLE
+                recyclerView.visibility = View.GONE
+                Log.d(
+                    "BaseBookListFragment",
+                    "No recommendations found. Showing noRecommendationsText."
+                )
+            } else {
+                noRecommendationsText.visibility = View.GONE
+                recyclerView.visibility = View.VISIBLE
+                Log.d(
+                    "BaseBookListFragment",
+                    "Recommendations found. Hiding noRecommendationsText."
+                )
+            }
         }
     }
 
     protected fun fetchRecommendationsFromViewModel(fetchMethod: suspend () -> List<BookRecommendation>) {
-        CoroutineScope(Dispatchers.IO).launch {
+        CoroutineScope(Dispatchers.Main).launch {
             try {
-                // Switch to Main thread before making UI updates
-                withContext(Dispatchers.Main) {
-                    progressBar.visibility = View.VISIBLE
-                }
+                // Show progress bar
+                progressBar.visibility = View.VISIBLE
 
-                val bookRecommendations = fetchMethod()
-                val userProfiles = fetchUserProfiles(bookRecommendations.map { it.creator }.distinct())
+                // Fetch data on the IO dispatcher
+                val bookRecommendations = withContext(Dispatchers.IO) { fetchMethod() }
+                val userProfiles = withContext(Dispatchers.IO) { fetchUserProfiles(bookRecommendations.map { it.creator }.distinct()) }
 
-                // Switch to Main thread before making UI updates
-                withContext(Dispatchers.Main) {
-                    updateAdapter(bookRecommendations, userProfiles)
-                }
+                // Update the adapter on the main thread
+                updateAdapter(bookRecommendations, userProfiles)
             } catch (e: Exception) {
+                // Handle the error and update the UI on the main thread
                 Log.e("BaseBookListFragment", "Error fetching book recommendations", e)
+                progressBar.visibility = View.GONE
+                noRecommendationsText.visibility = View.VISIBLE
+                recyclerView.visibility = View.GONE
             }
         }
     }
+
 
 
     private suspend fun fetchUserProfiles(userIds: List<String>): Map<String, UserProfile> {

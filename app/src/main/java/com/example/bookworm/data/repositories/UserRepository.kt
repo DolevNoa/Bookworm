@@ -14,7 +14,7 @@ class UserRepositoryImpl: UserRepositoryInterface {
     private val profileImagesRef = storage.reference.child("profile_images")
 
 
-    suspend fun getUserFullName(userId: String): String? {
+    private suspend fun getUserFullName(userId: String): String? {
         return try {
             val document = usersCollection.document(userId).get().await()
             document.getString("fullName")
@@ -24,7 +24,7 @@ class UserRepositoryImpl: UserRepositoryInterface {
         }
     }
     // UserRepository.kt
-    suspend fun getUserProfilePhotoUrl(userId: String): String? {
+    private suspend fun getUserProfilePhotoUrl(userId: String): String? {
         return try {
             val imageRef = profileImagesRef.child("$userId.jpg")
             imageRef.downloadUrl.await().toString()
