@@ -1,6 +1,7 @@
 package com.example.bookworm.ui.auth
 
 import android.os.Bundle
+import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -55,19 +56,13 @@ class RegisterFragment : Fragment() {
         navigateToLoginButton = binding.navigateToLoginButton
 
         registerButton.setOnClickListener {
-            val email = emailEditText.text.toString()
-            val password = passwordEditText.text.toString()
-            val confirmPassword = confirmPasswordEditText.text.toString()
-            val fullName = fullNameEditText.text.toString()
+            val email = emailEditText.text.toString().trim()
+            val password = passwordEditText.text.toString().trim()
+            val confirmPassword = confirmPasswordEditText.text.toString().trim()
+            val fullName = fullNameEditText.text.toString().trim()
 
-            if (email.isNotEmpty() && password.isNotEmpty() && confirmPassword.isNotEmpty() && fullName.isNotEmpty()) {
-                if (password == confirmPassword) {
-                    createAccount(email, password, fullName)
-                } else {
-                    Toast.makeText(context, "Passwords do not match", Toast.LENGTH_SHORT).show()
-                }
-            } else {
-                Toast.makeText(context, "Please fill in all fields", Toast.LENGTH_SHORT).show()
+            if (validateInput(email, password, confirmPassword, fullName)) {
+                createAccount(email, password, fullName)
             }
         }
 
@@ -76,6 +71,45 @@ class RegisterFragment : Fragment() {
         }
 
         return view
+    }
+
+    private fun validateInput(
+        email: String,
+        password: String,
+        confirmPassword: String,
+        fullName: String
+    ): Boolean {
+        if (fullName.isEmpty()) {
+            Toast.makeText(context, "Please enter your full name", Toast.LENGTH_SHORT).show()
+            return false
+        }
+
+        if (email.isEmpty()) {
+            Toast.makeText(context, "Please enter your email", Toast.LENGTH_SHORT).show()
+            return false
+        }
+
+        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            Toast.makeText(context, "Please enter a valid email address", Toast.LENGTH_SHORT).show()
+            return false
+        }
+
+        if (password.isEmpty()) {
+            Toast.makeText(context, "Please enter your password", Toast.LENGTH_SHORT).show()
+            return false
+        }
+
+        if (password.length < 6) { // assuming a minimum password length of 6 characters
+            Toast.makeText(context, "Password must be at least 6 characters long", Toast.LENGTH_SHORT).show()
+            return false
+        }
+
+        if (password != confirmPassword) {
+            Toast.makeText(context, "Passwords do not match", Toast.LENGTH_SHORT).show()
+            return false
+        }
+
+        return true
     }
 
     private fun createAccount(email: String, password: String, fullName: String) {
