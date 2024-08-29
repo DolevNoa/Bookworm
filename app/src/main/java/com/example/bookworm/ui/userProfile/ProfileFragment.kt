@@ -8,6 +8,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -31,8 +33,8 @@ class ProfileFragment : Fragment() {
     private lateinit var auth: FirebaseAuth
     private lateinit var storage: FirebaseStorage
     private lateinit var storageRef: StorageReference
+    private lateinit var pickImageLauncher: ActivityResultLauncher<Intent>
 
-    private val PICK_IMAGE_REQUEST = 1
     private var imageUri: Uri? = null
 
     override fun onCreateView(
@@ -50,6 +52,20 @@ class ProfileFragment : Fragment() {
         auth = FirebaseAuth.getInstance()
         storage = FirebaseStorage.getInstance()
         storageRef = storage.reference
+
+        // Initialize the pick image launcher
+        pickImageLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+                if (result.resultCode == Activity.RESULT_OK) {
+                    val data: Intent? = result.data
+                    // Handle the image URI
+                    val imageUri: Uri? = data?.data
+                    if (imageUri != null) {
+                        this@ProfileFragment.imageUri = data.data
+                        binding.profileImage.setImageURI(imageUri)
+                    }
+                }
+            }
 
         // Populate fields with current user data
         populateUserData()
@@ -169,21 +185,12 @@ class ProfileFragment : Fragment() {
     }
 
     private fun openImageChooser() {
-        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
-        intent.setType("image/*")
-        intent.addCategory(Intent.CATEGORY_OPENABLE)
-        startActivityForResult(intent, PICK_IMAGE_REQUEST)
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data != null && data.data != null) {
-            imageUri = data.data
-            binding.profileImage.setImageURI(imageUri)
+        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
+            type = "image/*"
+            addCategory(Intent.CATEGORY_OPENABLE)
         }
+        pickImageLauncher.launch(intent)
     }
-
 
     private fun navigateBackToSettings() {
         findNavController().navigate(R.id.action_profileFragment_to_settingsFragment)
@@ -192,9 +199,5 @@ class ProfileFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-    companion object {
-        fun newInstance() = ProfileFragment()
     }
 }
