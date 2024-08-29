@@ -21,9 +21,9 @@ class SettingsFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentSettingsBinding.inflate(inflater, container, false)
-        viewModel = ViewModelProvider(requireActivity()).get(AuthViewModel::class.java)
+        viewModel = ViewModelProvider(requireActivity())[AuthViewModel::class.java]
 
         // Populate user data
         populateUserData()
