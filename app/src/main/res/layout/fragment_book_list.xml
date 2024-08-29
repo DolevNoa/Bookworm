@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -17,7 +16,8 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 style="@style/ProfileImage"
-                android:src="@mipmap/ic_launcher" />
+                android:src="@mipmap/ic_launcher"
+                android:contentDescription="@string/profile_image" />
 
             <TextView
                 android:id="@+id/noRecommendationsText"

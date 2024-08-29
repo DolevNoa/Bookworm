@@ -85,7 +85,7 @@
     </fragment>
     <fragment
         android:id="@+id/myListFragment"
-        android:name="com.example.bookworm.ui.mylist.MyListFragment"
+        android:name="com.example.bookworm.ui.books.MyListFragment"
         android:label="fragment_my_list"
         tools:layout="@layout/fragment_book_list" >
         <action

@@ -4,20 +4,20 @@
         android:id="@+id/feedFragment"
         android:name="com.example.bookworm.ui.feed.FeedFragment"
         android:icon="@drawable/ic_home"
-        android:title="Feed" />
+        android:title="@string/feed" />
     <item
         android:id="@+id/addBookRecommendationFragment"
         android:name="com.example.bookworm.ui.books.AddBookRecommendationFragment"
         android:icon="@drawable/ic_add"
-        android:title="Add Book" />
+        android:title="@string/add_book" />
     <item
         android:id="@+id/myListFragment"
-        android:name="com.example.bookworm.ui.mylist.MyListFragment"
+        android:name="com.example.bookworm.ui.books.MyListFragment"
         android:icon="@drawable/ic_my_posts"
-        android:title="My List" />
+        android:title="@string/my_list" />
     <item
         android:id="@+id/settingsFragment"
         android:name="com.example.bookworm.ui.settings.SettingsFragment"
         android:icon="@drawable/default_avatar"
-        android:title="Settings" />
+        android:title="@string/settings" />
 </menu>

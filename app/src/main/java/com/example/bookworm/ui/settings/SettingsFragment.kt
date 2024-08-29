@@ -86,8 +86,4 @@ class SettingsFragment : Fragment() {
         // Show a toast message for feedback
         Toast.makeText(requireContext(), "Logged out successfully", Toast.LENGTH_SHORT).show()
     }
-
-    companion object {
-        fun newInstance() = SettingsFragment()
-    }
 }

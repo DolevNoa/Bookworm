@@ -43,9 +43,16 @@
     <string name="userName">John Doe</string>
     <string name="SaveChanges">Save Changes</string>
     <string name="return_button">go back</string>
-    <string name="rateBooklable">Click to rate:</string>
+    <string name="rateBookLabel">Click to rate:</string>
     <string name="my_list_title">My book posts:</string>
     <string name="empty_recommendation_list_message">Your book list is empty. Start building your recommendations by adding your first book through the \'Add Book\' feature.</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
+    <string name="update_recommendation">Update Recommendation</string>
+    <string name="feed">Feed</string>
+    <string name="add_book">Add Book</string>
+    <string name="my_list">My List</string>
+    <string name="settings">Settings</string>
 
 
 </resources>
