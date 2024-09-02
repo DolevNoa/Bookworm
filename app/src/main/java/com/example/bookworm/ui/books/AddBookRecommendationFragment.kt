@@ -60,9 +60,6 @@ class AddBookRecommendationFragment : Fragment() {
     private val pickImage = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
         uri?.let {
             binding.imageViewBook.setImageURI(it)
-            uploadImageToFirebaseStorage(it) { url ->
-                imageUrl = url
-            }
         }
     }
 
@@ -200,21 +197,6 @@ class AddBookRecommendationFragment : Fragment() {
                 Toast.makeText(context, "Failed to add book recommendation", Toast.LENGTH_SHORT).show()
             }
         }
-    }
-
-
-    private fun uploadImageToFirebaseStorage(uri: Uri, onComplete: (String?) -> Unit) {
-        val fileRef = storageRef.child("book_images/${System.currentTimeMillis()}.jpg")
-        fileRef.putFile(uri)
-            .addOnSuccessListener {
-                fileRef.downloadUrl.addOnSuccessListener { downloadUri ->
-                    onComplete(downloadUri.toString())
-                }
-            }
-            .addOnFailureListener {
-                Toast.makeText(context, "Failed to upload image", Toast.LENGTH_SHORT).show()
-                onComplete(null)
-            }
     }
 
     private fun clearForm() {
