@@ -19,10 +19,12 @@ class HandleBooksViewModel : ViewModel() {
     private val auth: FirebaseAuth = FirebaseAuth.getInstance()
     val selectedBookRecommendation = MutableLiveData<BookRecommendation>()
 
-    // Function to fetch all book recommendations
+    // Function to fetch all book recommendations sorted by timestamp
     suspend fun getBookRecommendations(): List<BookRecommendation> {
         return withContext(Dispatchers.IO) {
-            repository.getBookRecommendations()
+            val recommendations = repository.getBookRecommendations()
+            // Sort the recommendations by timestamp in descending order
+            recommendations.sortedByDescending { it.timestamp }
         }
     }
 
@@ -30,7 +32,9 @@ class HandleBooksViewModel : ViewModel() {
         val userId = getCurrentUserId()
         if (userId != null) {
             return withContext(Dispatchers.IO) {
-                repository.getBookRecommendations(userId)
+                val recommendations = repository.getBookRecommendations(userId)
+                // Sort the recommendations by timestamp in descending order before returning
+                recommendations.sortedByDescending { it.timestamp }
             }
         }
         return emptyList()
